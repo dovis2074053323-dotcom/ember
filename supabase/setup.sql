@@ -1,7 +1,7 @@
 -- Ember · Diary Cabinet
 -- Setup SQL for Supabase
 
--- 日记表（一天一篇，不可修改不可删除）
+-- Diary entries (one per day, immutable)
 CREATE TABLE IF NOT EXISTS ember_entries (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   entry_date DATE NOT NULL UNIQUE,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS ember_entries (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- 批注表（Iris 写的旁注）
+-- Annotations (user's margin notes)
 CREATE TABLE IF NOT EXISTS ember_annotations (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   entry_id UUID NOT NULL REFERENCES ember_entries(id),
@@ -30,6 +30,6 @@ ALTER TABLE ember_annotations ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow all" ON ember_entries FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "Allow all" ON ember_annotations FOR ALL USING (true) WITH CHECK (true);
 
--- 索引
+-- Indexes
 CREATE INDEX idx_ember_entries_date ON ember_entries (entry_date DESC);
 CREATE INDEX idx_ember_annotations_entry ON ember_annotations (entry_id);
