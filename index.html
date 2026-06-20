@@ -871,7 +871,7 @@ function WordsPage(props) {
 /* ─── Main App ─── */
 function App() {
   var hasApi = !!getApiBase();
-  var _page = useState(hasApi ? "home" : "connect");
+  var _page = useState(isSetup() ? "locked" : "connect");
   var page = _page[0];
   var setPage = _page[1];
   var _entries = useState([]);
@@ -895,6 +895,15 @@ function App() {
   var _connecting = useState(false);
   var connecting = _connecting[0];
   var setConnecting = _connecting[1];
+  var _pinInput = useState("");
+  var pinInput = _pinInput[0];
+  var setPinInput = _pinInput[1];
+  var _pinConfirm = useState("");
+  var pinConfirm = _pinConfirm[0];
+  var setPinConfirm = _pinConfirm[1];
+  var _pinErr = useState("");
+  var pinErr = _pinErr[0];
+  var setPinErr = _pinErr[1];
   function loadEntries() {
     setLoading(true);
     api("").then(function (data) {
