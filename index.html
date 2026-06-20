@@ -98,9 +98,17 @@ var TIME_FEELS = {
 
 /* ─── API ─── */
 function getApiBase() {
-  var h = window.location.hash.replace("#", "");
-  if (!h) return "";
-  return decodeURIComponent(h).replace(/\/$/, "") + "/functions/v1/ember";
+  var url = localStorage.getItem("ember_url");
+  if (!url) return "";
+  return url.replace(/\/$/, "") + "/functions/v1/ember";
+}
+async function hashPin(pin) {
+  var enc = new TextEncoder().encode(pin);
+  var buf = await crypto.subtle.digest("SHA-256", enc);
+  return Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0")}).join("");
+}
+function isSetup() {
+  return !!localStorage.getItem("ember_url") && !!localStorage.getItem("ember_pin");
 }
 function api(path) {
   var base = getApiBase();
@@ -920,7 +928,9 @@ function App() {
     }
   }
   function handleConnect() {
-    if (!connectUrl.trim()) return;
+    if (!connectUrl.trim() || !pinInput.trim()) return;
+    if (pinInput !== pinConfirm) { setErrMsg("PIN does not match"); return; }
+    if (pinInput.length < 4) { setErrMsg("PIN must be at least 4 characters"); return; }
     var url = connectUrl.trim().replace(/\/$/, "");
     var testUrl = url + "/functions/v1/ember";
     setErrMsg("");
@@ -932,8 +942,12 @@ function App() {
     }).then(function (r) {
       setConnecting(false);
       if (r.ok) {
-        window.location.hash = encodeURIComponent(url);
-        setPage("home");
+        hashPin(pinInput).then(function(h) {
+          localStorage.setItem("ember_url", url);
+          localStorage.setItem("ember_pin", h);
+          window.location.hash = "";
+          setPage("home");
+        });
       } else {
         r.text().then(function (t) {
           setErrMsg("Failed (" + r.status + "): " + t.slice(0, 80));
@@ -944,7 +958,82 @@ function App() {
       setErrMsg("Cannot reach: " + e.message);
     });
   }
+  function handleUnlock() {
+    if (!pinInput.trim()) return;
+    setPinErr("");
+    hashPin(pinInput).then(function(h) {
+      if (h === localStorage.getItem("ember_pin")) {
+        setPage("home");
+        setPinInput("");
+      } else {
+        setPinErr("Wrong PIN");
+        setPinInput("");
+      }
+    });
+  }
+  function handleReset() {
+    if (confirm("This will disconnect Ember. You will need to re-enter the Supabase URL and set a new PIN.")) {
+      localStorage.removeItem("ember_url");
+      localStorage.removeItem("ember_pin");
+      setPage("connect");
+      setPinInput("");
+      setPinErr("");
+    }
+  }
   var latest = entries.length > 0 ? entries[0] : null;
+
+  /* ── LOCKED ── */
+  if (page === "locked") {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "shell"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "dot-bg"
+    }), /*#__PURE__*/React.createElement("div", {
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        position: "relative",
+        zIndex: 1,
+        padding: "20px"
+      }
+    }, /*#__PURE__*/React.createElement(NotebookIcon, {
+      size: 60
+    }), /*#__PURE__*/React.createElement("h1", {
+      style: {
+        fontSize: "24px",
+        color: "#3d2e1f",
+        letterSpacing: "6px",
+        margin: "12px 0 8px",
+        textShadow: "2px 2px 0 #d4c4a8"
+      }
+    }, "EMBER"), /*#__PURE__*/React.createElement("div", {
+      className: "label",
+      style: { marginBottom: "24px" }
+    }, "ENTER PIN TO UNLOCK"), /*#__PURE__*/React.createElement("div", {
+      style: { width: "100%", maxWidth: "360px" }
+    }, /*#__PURE__*/React.createElement("input", {
+      className: "input",
+      type: "password",
+      value: pinInput,
+      onChange: function (e) { setPinInput(e.target.value); },
+      onKeyDown: function (e) { if (e.key === "Enter") handleUnlock(); },
+      placeholder: "PIN",
+      style: { textAlign: "center", letterSpacing: "8px", fontSize: "18px" }
+    }), pinErr && /*#__PURE__*/React.createElement("div", {
+      style: { color: "#b86840", fontSize: "11px", marginTop: "8px", textAlign: "center" }
+    }, pinErr), /*#__PURE__*/React.createElement("button", {
+      onClick: handleUnlock,
+      className: "btn-dk",
+      style: { width: "100%", marginTop: "16px" }
+    }, "UNLOCK"), /*#__PURE__*/React.createElement("button", {
+      onClick: handleReset,
+      className: "clear-btn",
+      style: { width: "100%", marginTop: "12px", textAlign: "center", fontSize: "9px" }
+    }, "DISCONNECT & RESET"))));
+  }
 
   /* ── CONNECT ── */
   if (page === "connect") {
@@ -995,6 +1084,24 @@ function App() {
         setConnectUrl(e.target.value);
       },
       placeholder: "https://xxx.supabase.co"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "label",
+      style: { marginTop: "16px", marginBottom: "6px" }
+    }, "SET PIN"), /*#__PURE__*/React.createElement("input", {
+      className: "input",
+      type: "password",
+      value: pinInput,
+      onChange: function (e) { setPinInput(e.target.value); },
+      placeholder: "Enter PIN (4+ characters)"
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "label",
+      style: { marginTop: "10px", marginBottom: "6px" }
+    }, "CONFIRM PIN"), /*#__PURE__*/React.createElement("input", {
+      className: "input",
+      type: "password",
+      value: pinConfirm,
+      onChange: function (e) { setPinConfirm(e.target.value); },
+      placeholder: "Confirm PIN"
     }), /*#__PURE__*/React.createElement("button", {
       onClick: handleConnect,
       className: "btn-dk",
