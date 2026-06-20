@@ -100,7 +100,7 @@ var TIME_FEELS={
   dawn:{label:"DAWN",color:"#606888"},
   morning:{label:"MORNING",color:"#7888a8"},
   afternoon:{label:"AFTERNOON",color:"#607098"},
-  dusk:{label:"DUSK",color:"#785878"},
+  dusk:{label:"DUSK",color:"#c8d0e8"},
   night:{label:"NIGHT",color:"#505888"},
   latenight:{label:"LATE NIGHT",color:"#303850"}
 };
@@ -141,6 +141,20 @@ function EnvelopeOpen(){
     React.createElement("rect",{x:0,y:3,width:16,height:9,fill:"#1a2040",rx:1}),
     React.createElement("path",{d:"M0 3 L8 0 L16 3",fill:"#141830",stroke:"#1a2040",strokeWidth:.5}),
     React.createElement("path",{d:"M0 3 L8 8 L16 3",fill:"none",stroke:"#283050",strokeWidth:1}));
+}
+
+/* outlined envelope icon — white stroke only */
+function LetterIcon(props){
+  var s=props.size||20,unread=props.unread;
+  var op=unread?0.85:0.3;
+  var sc=unread?"#c0c8e0":"#606880";
+  return React.createElement("svg",{width:s,height:s*0.72,viewBox:"0 0 20 14.4",style:{display:"block",flexShrink:0}},
+    unread?React.createElement("rect",{x:1,y:1,width:18,height:12.4,rx:1.5,fill:"none",stroke:sc,strokeWidth:1.2}):
+      React.createElement("rect",{x:1,y:3.5,width:18,height:9.9,rx:1.5,fill:"none",stroke:sc,strokeWidth:1}),
+    unread?React.createElement("path",{d:"M1 1 L10 7.5 L19 1",fill:"none",stroke:sc,strokeWidth:1.2,strokeLinejoin:"round"}):
+      React.createElement("path",{d:"M1 3.5 L10 0.8 L19 3.5",fill:"none",stroke:sc,strokeWidth:1,strokeLinejoin:"round"}),
+    unread?null:React.createElement("path",{d:"M1 3.5 L10 9 L19 3.5",fill:"none",stroke:sc,strokeWidth:1,strokeLinejoin:"round"})
+  );
 }
 
 /* ─── Header ─── */
@@ -233,9 +247,7 @@ function EntryView(props){
       React.createElement("div",{style:{display:"flex",alignItems:"center",gap:"10px"}},
         React.createElement("span",{style:{fontSize:"13px",color:"#8090b8"}},entry.entry_date||entry.date),
         React.createElement(TimeFeelBadge,{timefeel:entry.time_of_day||entry.timefeel})),
-      React.createElement("div",{style:{textAlign:"right"}},
-        React.createElement("div",{className:"label",style:{fontSize:"8px",marginBottom:"2px"}},"WORD OF THE DAY"),
-        React.createElement("div",{style:{fontSize:"20px",color:"#c0c8e0"}},entry.word_of_day||entry.word))),
+      React.createElement(LetterIcon,{size:24,unread:unread})),
     React.createElement("div",{style:{borderLeft:"4px solid "+tf.color,background:"#0c1024",padding:"24px 24px 24px 20px",boxShadow:"0 4px 12px rgba(0,0,0,0.4)",marginBottom:"20px",border:"2px solid #141c38",borderLeftWidth:"4px",borderLeftColor:tf.color}},
       React.createElement(EntryBody,{body:entry.body,annotations:anns,onSelect:onSel})),
     anns.length>0&&React.createElement("div",null,
@@ -263,10 +275,9 @@ function LogPage(props){
           React.createElement("div",{style:{padding:"12px 14px",flex:1,overflow:"hidden"}},
             React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"4px"}},
               React.createElement("div",{style:{display:"flex",alignItems:"center",gap:"8px"}},
-                unread?React.createElement(EnvelopeSealed,null):React.createElement(EnvelopeOpen,null),
                 React.createElement("span",{style:{fontSize:"12px",color:"#8090b8"}},e.entry_date),
                 React.createElement(TimeFeelBadge,{timefeel:e.time_of_day,style:{fontSize:"8px",padding:"1px 6px"}})),
-              React.createElement("span",{style:{fontSize:"16px",color:"#c0c8e0"}},e.word_of_day)),
+              React.createElement(LetterIcon,{size:20,unread:unread})),
             React.createElement("div",{style:{fontSize:"12px",color:"#505878",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},preview),
             ac>0&&React.createElement("div",{className:"label",style:{fontSize:"8px",marginTop:"4px",color:"#607098"}},ac," ANNOTATION",ac>1?"S":""))));
     }),
@@ -297,7 +308,7 @@ function WordsPage(props){
         onMouseEnter:function(ev){if(e)ev.currentTarget.style.transform="translate(-1px,-1px)";},
         onMouseLeave:function(ev){ev.currentTarget.style.transform="translate(0,0)";}},
         React.createElement("div",{style:{fontSize:"8px",color:"#383c58"}},cell.day),
-        e?React.createElement("div",{style:{fontSize:"16px",color:"#c0c8e0",textAlign:"center",flex:1,display:"flex",alignItems:"center",justifyContent:"center"}},e.word_of_day)
+        e?React.createElement("div",{style:{textAlign:"center",flex:1,display:"flex",alignItems:"center",justifyContent:"center"}},React.createElement(LetterIcon,{size:14,unread:ur}))
         :React.createElement("div",{style:{flex:1,display:"flex",alignItems:"center",justifyContent:"center"}},React.createElement("div",{style:{width:"4px",height:"4px",background:"#101828"}})),
         tf&&React.createElement("div",{style:{height:"3px",background:tf.color,margin:"0 -3px -3px"}}),
         ur&&React.createElement("div",{style:{position:"absolute",top:"2px",right:"2px",width:"4px",height:"4px",background:"#7088b8",borderRadius:"50%",boxShadow:"0 0 3px rgba(112,136,184,0.4)"}}));
