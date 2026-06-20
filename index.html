@@ -4,55 +4,215 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Ember</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect x='3' y='2' width='10' height='12' fill='%23d4c4a8'/><rect x='4' y='3' width='8' height='10' fill='%23faf5e8'/><rect x='3' y='2' width='2' height='12' fill='%23b86840'/><rect x='10' y='1' width='2' height='3' fill='%23b86840'/></svg>">
-<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAC7UlEQVR4nO3cPU5UURiAYTFQsAdrKhs3YIzLMC7AJbgEl+ACjMsw7sDe2p6KkEBjQULFa3DOuT8Dz9NP5mS+l28uF2ZObq4uX8BDXm59APZLHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgdJHCRxkMRBEgfpdKXnub1e6YmeibPzFZ5k4Tg0sZD7F3bJShaLQxbruHudl0lkgThksb5lEpl9QaqMDc1+8afGoYzNTR3BvDiUsRPzBjEpDmXsyqRxzIhDGTs0YyjDcShjt4ZH4/Y5aSwOa2Pnxga01t9Wnr0fnz8c/Nj3X75PPMnjDWwOa+MoDIzJNQdJHKRD4/CeckQOHZbNQRIHSRwkcZDEQdrpHdKR+4mvPn6aeJLnzOYgiYMkDpI4SOIgiYMkDpI4SOIg7fQO6YiLN++2PsID/nz7uvUR/pvNQRIHSRwkcZDEQRIHSRwkcZDEQXqCd0j36d//2Xrx+u1qJ3k8m4MkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYMkDpI4SOIgiYN0uvUB5vv96+fWR3gibA6SOEjiIImDJA6SOEjiIImDJA7Syc3V5SGPu72efRKWdHZ+wINsDpI4SOIgiYMkDtKhcRx09cs2Dh2WzUESB2kgDu8sR2FgTDYHaSwOy2PnxgZkc5CG47A8dmt4NDM2hz52aMZQJr2t6GNXJo1j3jWHPnZi3iCmXpDqY3NTRzD7txV9bGj2i7/AB6nvjuj/CNe0zM/kYp+yl8g6llzVC38Fw/3RVTLXKm/fa30/h2uRI+T2OUkcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB0kcJHGQxEESB+kv+vdNS7ZGGVUAAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%230a0e1a'/><circle cx='8' cy='6' r='3' fill='%23f0a050'/><circle cx='8' cy='5' r='2' fill='%23ffd080'/><rect x='7' y='9' width='2' height='2' fill='%23f0a050'/></svg>">
 <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{margin:0;background:#f4ede0;font-family:'DotGothic16',monospace;color:#3d2e1f;-webkit-tap-highlight-color:transparent}
-::selection{background:rgba(184,104,64,0.25)}
+body{margin:0;background:#0a0e1a;font-family:'DotGothic16',monospace;color:#e8dcc8;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
+::selection{background:rgba(240,160,80,0.3)}
 ::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-track{background:#f4ede0}
-::-webkit-scrollbar-thumb{background:#d4c4a8}
+::-webkit-scrollbar-track{background:#0a0e1a}
+::-webkit-scrollbar-thumb{background:#2a2040}
 
+/* ── Starfield ── */
+.starfield{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.stars-layer{position:absolute;inset:0;background:transparent}
+.stars-layer.s1{
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 25% 8%, #ffeedd 50%, transparent 100%),
+    radial-gradient(1px 1px at 40% 22%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 55% 5%, #ffeedd 50%, transparent 100%),
+    radial-gradient(1px 1px at 70% 18%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 85% 12%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 15% 35%, #ffeedd 50%, transparent 100%),
+    radial-gradient(1px 1px at 33% 42%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 50% 30%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 65% 38%, #ffeedd 50%, transparent 100%),
+    radial-gradient(1px 1px at 80% 45%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 92% 28%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 8% 55%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 22% 62%, #ffeedd 50%, transparent 100%),
+    radial-gradient(1px 1px at 45% 58%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 60% 52%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 75% 60%, #ffeedd 50%, transparent 100%),
+    radial-gradient(1px 1px at 88% 55%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 5% 75%, #ffeedd 50%, transparent 100%),
+    radial-gradient(1px 1px at 18% 82%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 35% 78%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 52% 85%, #ffeedd 50%, transparent 100%),
+    radial-gradient(1px 1px at 68% 72%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 82% 80%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 95% 70%, #ffeedd 50%, transparent 100%),
+    radial-gradient(1px 1px at 12% 92%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 30% 95%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 48% 90%, #ffeedd 50%, transparent 100%),
+    radial-gradient(1px 1px at 72% 95%, #fff 50%, transparent 100%),
+    radial-gradient(1px 1px at 90% 88%, #fff 50%, transparent 100%);
+  animation: twinkle1 4s ease-in-out infinite alternate;
+}
+.stars-layer.s2{
+  background-image:
+    radial-gradient(1.5px 1.5px at 5% 20%, rgba(255,220,180,0.8) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 30% 50%, rgba(255,255,255,0.8) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 15%, rgba(255,220,180,0.8) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 78% 40%, rgba(255,255,255,0.8) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 20% 70%, rgba(255,220,180,0.8) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 60% 80%, rgba(255,255,255,0.8) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 88% 65%, rgba(255,220,180,0.8) 50%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 42% 35%, rgba(255,255,255,0.8) 50%, transparent 100%),
+    radial-gradient(2px 2px at 15% 48%, rgba(240,160,80,0.6) 50%, transparent 100%),
+    radial-gradient(2px 2px at 70% 25%, rgba(240,160,80,0.6) 50%, transparent 100%),
+    radial-gradient(2px 2px at 45% 70%, rgba(240,160,80,0.5) 50%, transparent 100%),
+    radial-gradient(2px 2px at 90% 10%, rgba(240,160,80,0.5) 50%, transparent 100%);
+  animation: twinkle2 5s ease-in-out infinite alternate;
+}
+@keyframes twinkle1{0%{opacity:.6}100%{opacity:1}}
+@keyframes twinkle2{0%{opacity:1}100%{opacity:.5}}
+
+/* ── Shell ── */
 .shell{min-height:100vh;position:relative}
-.dot-bg{position:fixed;inset:0;background-image:radial-gradient(circle,#d8c9a8 1px,transparent 1px);background-size:16px 16px;opacity:.5;pointer-events:none;z-index:0}
 
-.label{letter-spacing:3px;text-transform:uppercase;font-size:9px;color:#a89478;font-family:'DotGothic16',monospace}
-.footer{text-align:center;letter-spacing:3px;text-transform:uppercase;font-size:9px;color:#a89478;padding:16px 0}
+/* ── Typography ── */
+.label{letter-spacing:3px;text-transform:uppercase;font-size:9px;color:#6a5f80;font-family:'DotGothic16',monospace}
+.footer{text-align:center;letter-spacing:3px;text-transform:uppercase;font-size:9px;color:#4a4060;padding:16px 0}
 
+/* ── Nav ── */
 .nav-btn{background:none;border:none;font-family:'DotGothic16',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;padding:4px 0}
 
-.btn{padding:8px 16px;border:2px solid #3d2e1f;background:#faf5e8;color:#3d2e1f;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'DotGothic16',monospace;cursor:pointer;box-shadow:2px 2px 0 #d4c4a8}
-.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #d4c4a8}
-.btn-dk{padding:8px 16px;border:2px solid #3d2818;background:#3d2818;color:#f4ede0;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'DotGothic16',monospace;cursor:pointer;box-shadow:3px 3px 0 #a89478}
-.btn-dk:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #a89478}
+/* ── Buttons ── */
+.btn{padding:8px 16px;border:2px solid #3a3050;background:#141830;color:#e8dcc8;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'DotGothic16',monospace;cursor:pointer;box-shadow:2px 2px 0 #1a1530}
+.btn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #1a1530}
+.btn-dk{padding:8px 16px;border:2px solid #f0a050;background:#f0a050;color:#0a0e1a;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-family:'DotGothic16',monospace;cursor:pointer;box-shadow:3px 3px 0 #805020}
+.btn-dk:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #805020}
 
-.input{width:100%;padding:8px 10px;border:2px solid #d4c4a8;background:#faf5e8;color:#3d2e1f;font-family:'DotGothic16',monospace;font-size:12px;outline:none}
-.input::placeholder{color:#a89478}
+/* ── Inputs ── */
+.input{width:100%;padding:8px 10px;border:2px solid #2a2040;background:#0e1225;color:#e8dcc8;font-family:'DotGothic16',monospace;font-size:12px;outline:none}
+.input:focus{border-color:#f0a050}
+.input::placeholder{color:#4a4060}
 
-.ann-input{padding:8px 10px;border:2px solid #d4c4a8;background:#faf5e8;color:#3d2e1f;font-family:'DotGothic16',monospace;font-size:12px;outline:none}
-.ann-input::placeholder{color:#a89478}
-.ann-input:disabled{background:#f0e8d8}
+/* ── Annotation ── */
+.ann-input{padding:8px 10px;border:2px solid #2a2040;background:#0e1225;color:#e8dcc8;font-family:'DotGothic16',monospace;font-size:12px;outline:none}
+.ann-input:focus{border-color:#f0a050}
+.ann-input::placeholder{color:#4a4060}
+.ann-input:disabled{background:#0a0e1a}
+.ann-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#0e1225;border-top:2px solid #2a2040;padding:10px 16px 14px}
+.ann-card{padding:14px 16px;background:rgba(20,24,48,0.6);border-left:3px solid #f0a050;margin-bottom:8px}
 
-.ann-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:#f4ede0;border-top:2px solid #d4c4a8;padding:10px 16px 14px}
-.ann-card{padding:14px 16px;background:rgba(235,224,200,0.35);border-left:3px solid #b86840;margin-bottom:8px}
+.hl-text{border-bottom:2px solid #f0a050;background:rgba(240,160,80,0.12);padding-bottom:1px}
+.clear-btn{background:none;border:none;color:#6a5f80;font-family:'DotGothic16',monospace;font-size:9px;cursor:pointer;margin-left:6px}
 
-.hl-text{border-bottom:2px solid #b86840;background:rgba(184,104,64,0.12);padding-bottom:1px}
+/* ── Shelf (Log cards) ── */
+.shelf-plank{
+  position:relative;
+  margin-bottom:20px;
+  padding-bottom:8px;
+}
+.shelf-plank::after{
+  content:'';
+  display:block;
+  height:8px;
+  background: linear-gradient(180deg, #5a3a1e 0%, #7a5030 40%, #6b4226 100%);
+  border-radius:0 0 2px 2px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+  margin-top:4px;
+}
+.log-card{
+  display:flex;
+  margin-bottom:0;
+  border:2px solid #2a2040;
+  background:#111528;
+  cursor:pointer;
+  box-shadow:2px 2px 0 #0a0e1a;
+  transition:transform .1s;
+  position:relative;
+}
+.log-card.unread{
+  border-color:#f0a050;
+  box-shadow: 0 0 8px rgba(240,160,80,0.2), 2px 2px 0 #0a0e1a;
+}
 
-.clear-btn{background:none;border:none;color:#a89478;font-family:'DotGothic16',monospace;font-size:9px;cursor:pointer;margin-left:6px}
-
-.log-card{display:flex;margin-bottom:8px;border:2px solid #d4c4a8;background:#faf5e8;cursor:pointer;box-shadow:3px 3px 0 #d4c4a8;transition:transform .1s}
-
+/* ── Calendar ── */
 .dow-header{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .cal-cell{aspect-ratio:1;display:flex;flex-direction:column;justify-content:space-between;padding:3px;position:relative;overflow:hidden;transition:transform .1s}
-.cal-filled{border:2px solid #d4c4a8;background:#faf5e8;cursor:pointer}
-.cal-empty{border:2px dashed #d4c4a8;background:transparent}
+.cal-filled{border:2px solid #2a2040;background:#111528;cursor:pointer}
+.cal-filled.unread{border-color:#f0a050;box-shadow:0 0 6px rgba(240,160,80,0.15)}
+.cal-empty{border:2px dashed #1a1530;background:transparent}
 
-.err-box{margin-top:12px;padding:10px;background:rgba(184,104,64,0.15);border:2px solid #b86840;color:#3d2e1f;font-size:11px;line-height:1.6;word-break:break-all}
+/* ── Error ── */
+.err-box{margin-top:12px;padding:10px;background:rgba(240,80,80,0.15);border:2px solid #f05050;color:#e8dcc8;font-size:11px;line-height:1.6;word-break:break-all}
+
+/* ── Pixel Creature ── */
+.creature-zone{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:48px;
+  pointer-events:none;
+  z-index:40;
+}
+.creature{
+  position:absolute;
+  bottom:8px;
+  width:16px;
+  height:16px;
+  image-rendering:pixelated;
+  transition: left 2s linear;
+}
+
+/* ── Unread dot ── */
+.unread-dot{
+  display:inline-block;
+  width:6px;height:6px;
+  background:#f0a050;
+  border-radius:50%;
+  box-shadow:0 0 4px #f0a050;
+  margin-right:6px;
+  vertical-align:middle;
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+@keyframes glow-pulse{0%,100%{opacity:1;box-shadow:0 0 4px #f0a050}50%{opacity:.6;box-shadow:0 0 8px #f0a050}}
+
+/* ── Envelope icons ── */
+.envelope-sealed,.envelope-open{
+  display:inline-block;
+  width:16px;height:12px;
+  position:relative;
+  vertical-align:middle;
+  margin-right:6px;
+  flex-shrink:0;
+}
+
+/* ── Hearts float ── */
+@keyframes float-heart{
+  0%{opacity:1;transform:translateY(0) scale(1)}
+  100%{opacity:0;transform:translateY(-20px) scale(0.5)}
+}
+.heart-particle{
+  position:absolute;
+  color:#f06080;
+  font-size:8px;
+  pointer-events:none;
+  animation:float-heart 1.5s ease-out forwards;
+}
+
+/* ── Zzz float ── */
+@keyframes float-zzz{
+  0%{opacity:1;transform:translateY(0)}
+  100%{opacity:0;transform:translateY(-16px) translateX(8px)}
+}
+.zzz-particle{
+  position:absolute;
+  color:#6a5f80;
+  font-size:7px;
+  font-family:'DotGothic16',monospace;
+  pointer-events:none;
+  animation:float-zzz 2s ease-out forwards;
+}
 </style>
 </head>
 <body>
@@ -60,7 +220,7 @@ body{margin:0;background:#f4ede0;font-family:'DotGothic16',monospace;color:#3d2e
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script>
-/* ═══ Ember · Diary Cabinet ═══ */
+/* ═══ Ember · Starlit Diary ═══ */
 
 var useState = React.useState,
   useEffect = React.useEffect,
@@ -68,32 +228,14 @@ var useState = React.useState,
   useMemo = React.useMemo,
   useCallback = React.useCallback;
 
-/* ─── Time Feels ─── */
+/* ─── Time Feels (dark palette) ─── */
 var TIME_FEELS = {
-  dawn: {
-    label: "DAWN",
-    color: "#b8b0a0"
-  },
-  morning: {
-    label: "MORNING",
-    color: "#ddb850"
-  },
-  afternoon: {
-    label: "AFTERNOON",
-    color: "#d08030"
-  },
-  dusk: {
-    label: "DUSK",
-    color: "#b84830"
-  },
-  night: {
-    label: "NIGHT",
-    color: "#685878"
-  },
-  latenight: {
-    label: "LATE NIGHT",
-    color: "#302018"
-  }
+  dawn:      { label: "DAWN",       color: "#8090b0" },
+  morning:   { label: "MORNING",    color: "#e0b850" },
+  afternoon: { label: "AFTERNOON",  color: "#e08840" },
+  dusk:      { label: "DUSK",       color: "#c05040" },
+  night:     { label: "NIGHT",      color: "#7060a0" },
+  latenight: { label: "LATE NIGHT", color: "#4a3060" }
 };
 
 /* ─── API ─── */
@@ -114,11 +256,9 @@ function api(path) {
   var base = getApiBase();
   if (!base) return Promise.reject(new Error("No API"));
   return fetch(base + (path || ""), {
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(function (r) {
-    return r.json().then(function (d) {
+    headers: { "Content-Type": "application/json" }
+  }).then(function(r) {
+    return r.json().then(function(d) {
       if (!r.ok) throw new Error(d.error || r.status);
       return d;
     });
@@ -129,249 +269,385 @@ function apiPost(path, body) {
   if (!base) return Promise.reject(new Error("No API"));
   return fetch(base + (path || ""), {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body)
-  }).then(function (r) {
-    return r.json().then(function (d) {
+  }).then(function(r) {
+    return r.json().then(function(d) {
+      if (!r.ok) throw new Error(d.error || r.status);
+      return d;
+    });
+  });
+}
+function apiPatch(path, body) {
+  var base = getApiBase();
+  if (!base) return Promise.reject(new Error("No API"));
+  return fetch(base + (path || ""), {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  }).then(function(r) {
+    return r.json().then(function(d) {
       if (!r.ok) throw new Error(d.error || r.status);
       return d;
     });
   });
 }
 
-/* ─── Pixel Notebook Icon ─── */
-function NotebookIcon(props) {
-  var size = props.size || 48;
-  return /*#__PURE__*/React.createElement("svg", {
-    width: size,
-    height: size,
-    viewBox: "0 0 16 16",
-    style: {
-      imageRendering: "pixelated",
-      display: "block",
-      margin: "0 auto"
+/* ─── Pixel Ember Creature (CSS box-shadow art) ─── */
+/* 10x10 pixel creature - a little flame spirit */
+var PX = 2; /* each "pixel" is 2x2 CSS pixels */
+
+function makePixelShadow(pixels, px) {
+  return pixels.map(function(p) {
+    return (p[0]*px)+"px "+(p[1]*px)+"px 0 "+p[2];
+  }).join(",");
+}
+
+/* Idle frame */
+var CREATURE_IDLE = [
+  [4,0,"#ffd080"],[5,0,"#ffd080"],
+  [3,1,"#ffd080"],[4,1,"#ffe0a0"],[5,1,"#ffe0a0"],[6,1,"#ffd080"],
+  [3,2,"#f0a050"],[4,2,"#ffd080"],[5,2,"#ffd080"],[6,2,"#f0a050"],
+  [2,3,"#f0a050"],[3,3,"#f0a050"],[4,3,"#0a0e1a"],[5,3,"#0a0e1a"],[6,3,"#f0a050"],[7,3,"#f0a050"],
+  [2,4,"#f0a050"],[3,4,"#f08040"],[4,4,"#f0a050"],[5,4,"#f0a050"],[6,4,"#f08040"],[7,4,"#f0a050"],
+  [3,5,"#f08040"],[4,5,"#f08040"],[5,5,"#f08040"],[6,5,"#f08040"],
+  [3,6,"#e06030"],[4,6,"#f08040"],[5,6,"#f08040"],[6,6,"#e06030"],
+  [4,7,"#e06030"],[5,7,"#e06030"],
+  [3,8,"#c04820"],[4,8,"#e06030"],[5,8,"#e06030"],[6,8,"#c04820"],
+  [4,9,"#c04820"],[5,9,"#c04820"]
+];
+
+/* Blink frame (eyes closed) */
+var CREATURE_BLINK = [
+  [4,0,"#ffd080"],[5,0,"#ffd080"],
+  [3,1,"#ffd080"],[4,1,"#ffe0a0"],[5,1,"#ffe0a0"],[6,1,"#ffd080"],
+  [3,2,"#f0a050"],[4,2,"#ffd080"],[5,2,"#ffd080"],[6,2,"#f0a050"],
+  [2,3,"#f0a050"],[3,3,"#f0a050"],[4,3,"#f0a050"],[5,3,"#f0a050"],[6,3,"#f0a050"],[7,3,"#f0a050"],
+  [2,4,"#f0a050"],[3,4,"#f08040"],[4,4,"#f0a050"],[5,4,"#f0a050"],[6,4,"#f08040"],[7,4,"#f0a050"],
+  [3,5,"#f08040"],[4,5,"#f08040"],[5,5,"#f08040"],[6,5,"#f08040"],
+  [3,6,"#e06030"],[4,6,"#f08040"],[5,6,"#f08040"],[6,6,"#e06030"],
+  [4,7,"#e06030"],[5,7,"#e06030"],
+  [3,8,"#c04820"],[4,8,"#e06030"],[5,8,"#e06030"],[6,8,"#c04820"],
+  [4,9,"#c04820"],[5,9,"#c04820"]
+];
+
+/* Walk frame 1 (leaning left) */
+var CREATURE_WALK1 = [
+  [3,0,"#ffd080"],[4,0,"#ffd080"],
+  [3,1,"#ffd080"],[4,1,"#ffe0a0"],[5,1,"#ffe0a0"],[6,1,"#ffd080"],
+  [2,2,"#f0a050"],[3,2,"#ffd080"],[4,2,"#ffd080"],[5,2,"#f0a050"],
+  [2,3,"#f0a050"],[3,3,"#0a0e1a"],[4,3,"#0a0e1a"],[5,3,"#f0a050"],[6,3,"#f0a050"],
+  [2,4,"#f0a050"],[3,4,"#f0a050"],[4,4,"#f0a050"],[5,4,"#f08040"],[6,4,"#f0a050"],
+  [3,5,"#f08040"],[4,5,"#f08040"],[5,5,"#f08040"],[6,5,"#f08040"],
+  [3,6,"#e06030"],[4,6,"#f08040"],[5,6,"#f08040"],[6,6,"#e06030"],
+  [4,7,"#e06030"],[5,7,"#e06030"],
+  [3,8,"#c04820"],[5,8,"#e06030"],[6,8,"#c04820"],
+  [3,9,"#c04820"],[6,9,"#c04820"]
+];
+
+/* Walk frame 2 (leaning right) */
+var CREATURE_WALK2 = [
+  [5,0,"#ffd080"],[6,0,"#ffd080"],
+  [3,1,"#ffd080"],[4,1,"#ffe0a0"],[5,1,"#ffe0a0"],[6,1,"#ffd080"],
+  [4,2,"#f0a050"],[5,2,"#ffd080"],[6,2,"#ffd080"],[7,2,"#f0a050"],
+  [3,3,"#f0a050"],[4,3,"#0a0e1a"],[5,3,"#0a0e1a"],[6,3,"#f0a050"],[7,3,"#f0a050"],
+  [3,4,"#f0a050"],[4,4,"#f08040"],[5,4,"#f0a050"],[6,4,"#f0a050"],[7,4,"#f0a050"],
+  [3,5,"#f08040"],[4,5,"#f08040"],[5,5,"#f08040"],[6,5,"#f08040"],
+  [3,6,"#e06030"],[4,6,"#f08040"],[5,6,"#f08040"],[6,6,"#e06030"],
+  [4,7,"#e06030"],[5,7,"#e06030"],
+  [3,8,"#c04820"],[4,8,"#e06030"],[6,8,"#c04820"],
+  [3,9,"#c04820"],[6,9,"#c04820"]
+];
+
+/* Sleep frame (dimmer, eyes as lines) */
+var CREATURE_SLEEP = [
+  [4,1,"#c08040"],[5,1,"#c08040"],
+  [3,2,"#b07030"],[4,2,"#c08040"],[5,2,"#c08040"],[6,2,"#b07030"],
+  [3,3,"#a06030"],[4,3,"#a06030"],[5,3,"#a06030"],[6,3,"#a06030"],
+  [3,4,"#a06030"],[4,4,"#905828"],[5,4,"#905828"],[6,4,"#a06030"],
+  [3,5,"#905828"],[4,5,"#905828"],[5,5,"#905828"],[6,5,"#905828"],
+  [3,6,"#804820"],[4,6,"#905828"],[5,6,"#905828"],[6,6,"#804820"],
+  [4,7,"#804820"],[5,7,"#804820"],
+  [3,8,"#703818"],[4,8,"#804820"],[5,8,"#804820"],[6,8,"#703818"],
+  [4,9,"#703818"],[5,9,"#703818"]
+];
+
+/* Happy frame (same as idle but with rosy cheeks) */
+var CREATURE_HAPPY = [
+  [4,0,"#ffd080"],[5,0,"#ffd080"],
+  [3,1,"#ffd080"],[4,1,"#ffe0a0"],[5,1,"#ffe0a0"],[6,1,"#ffd080"],
+  [3,2,"#f0a050"],[4,2,"#ffd080"],[5,2,"#ffd080"],[6,2,"#f0a050"],
+  [2,3,"#f0a050"],[3,3,"#f0a050"],[4,3,"#0a0e1a"],[5,3,"#0a0e1a"],[6,3,"#f0a050"],[7,3,"#f0a050"],
+  [2,4,"#f06080"],[3,4,"#f08040"],[4,4,"#f0a050"],[5,4,"#f0a050"],[6,4,"#f08040"],[7,4,"#f06080"],
+  [3,5,"#f08040"],[4,5,"#f08040"],[5,5,"#f08040"],[6,5,"#f08040"],
+  [3,6,"#e06030"],[4,6,"#f08040"],[5,6,"#f08040"],[6,6,"#e06030"],
+  [4,7,"#e06030"],[5,7,"#e06030"],
+  [3,8,"#c04820"],[4,8,"#e06030"],[5,8,"#e06030"],[6,8,"#c04820"],
+  [4,9,"#c04820"],[5,9,"#c04820"]
+];
+
+function PixelCreature(props) {
+  var hasUnread = props.hasUnread;
+  var _pos = useState(50);
+  var pos = _pos[0], setPos = _pos[1];
+  var _dir = useState(1);
+  var dir = _dir[0], setDir = _dir[1];
+  var _frame = useState("idle");
+  var frame = _frame[0], setFrame = _frame[1];
+  var _walkFrame = useState(0);
+  var walkFrame = _walkFrame[0], setWalkFrame = _walkFrame[1];
+  var _hearts = useState([]);
+  var hearts = _hearts[0], setHearts = _hearts[1];
+  var _zzz = useState([]);
+  var zzz = _zzz[0], setZzz = _zzz[1];
+  var timerRef = useRef(null);
+
+  /* Determine base state */
+  var hour = new Date().getHours();
+  var isSleepTime = hour >= 23 || hour < 6;
+
+  useEffect(function() {
+    function tick() {
+      if (isSleepTime) {
+        setFrame("sleep");
+        /* Float zzz */
+        if (Math.random() < 0.3) {
+          setZzz(function(prev) {
+            return prev.concat([{ id: Date.now(), x: Math.random()*6-3 }]);
+          });
+        }
+      } else if (hasUnread) {
+        setFrame("happy");
+        /* Float hearts */
+        if (Math.random() < 0.4) {
+          setHearts(function(prev) {
+            return prev.concat([{ id: Date.now(), x: Math.random()*10-5 }]);
+          });
+        }
+      } else {
+        /* Random behavior */
+        var r = Math.random();
+        if (r < 0.15) {
+          setFrame("blink");
+          setTimeout(function(){ setFrame("idle"); }, 200);
+        } else if (r < 0.5) {
+          /* Walk */
+          setWalkFrame(function(f){ return f === 0 ? 1 : 0; });
+          setFrame("walk");
+          setPos(function(p) {
+            var newDir = dir;
+            var next = p + dir * (8 + Math.random()*8);
+            if (next > 85) { newDir = -1; setDir(-1); next = 83; }
+            if (next < 5) { newDir = 1; setDir(1); next = 7; }
+            return next;
+          });
+        } else {
+          setFrame("idle");
+        }
+      }
     }
-  }, /*#__PURE__*/React.createElement("rect", {
-    x: "3",
-    y: "2",
-    width: "10",
-    height: "12",
-    fill: "#d4c4a8"
-  }), /*#__PURE__*/React.createElement("rect", {
-    x: "4",
-    y: "3",
-    width: "8",
-    height: "10",
-    fill: "#faf5e8"
-  }), /*#__PURE__*/React.createElement("rect", {
-    x: "3",
-    y: "2",
-    width: "2",
-    height: "12",
-    fill: "#b86840"
-  }), /*#__PURE__*/React.createElement("rect", {
-    x: "6",
-    y: "5",
-    width: "5",
-    height: "1",
-    fill: "#d4c4a8"
-  }), /*#__PURE__*/React.createElement("rect", {
-    x: "6",
-    y: "7",
-    width: "5",
-    height: "1",
-    fill: "#d4c4a8"
-  }), /*#__PURE__*/React.createElement("rect", {
-    x: "6",
-    y: "9",
-    width: "3",
-    height: "1",
-    fill: "#d4c4a8"
-  }), /*#__PURE__*/React.createElement("rect", {
-    x: "10",
-    y: "1",
-    width: "2",
-    height: "3",
-    fill: "#b86840"
-  }), /*#__PURE__*/React.createElement("rect", {
-    x: "10",
-    y: "4",
-    width: "1",
-    height: "1",
-    fill: "#b86840"
-  }), /*#__PURE__*/React.createElement("rect", {
-    x: "11",
-    y: "4",
-    width: "1",
-    height: "1",
-    fill: "#b86840"
-  }));
+    timerRef.current = setInterval(tick, 1500);
+    return function(){ clearInterval(timerRef.current); };
+  }, [isSleepTime, hasUnread, dir]);
+
+  /* Clean up old particles */
+  useEffect(function() {
+    var t = setInterval(function() {
+      var now = Date.now();
+      setHearts(function(h){ return h.filter(function(p){ return now - p.id < 1500; }); });
+      setZzz(function(z){ return z.filter(function(p){ return now - p.id < 2000; }); });
+    }, 500);
+    return function(){ clearInterval(t); };
+  }, []);
+
+  var pixels;
+  if (frame === "sleep") pixels = CREATURE_SLEEP;
+  else if (frame === "happy") pixels = CREATURE_HAPPY;
+  else if (frame === "blink") pixels = CREATURE_BLINK;
+  else if (frame === "walk") pixels = walkFrame === 0 ? CREATURE_WALK1 : CREATURE_WALK2;
+  else pixels = CREATURE_IDLE;
+
+  var shadow = makePixelShadow(pixels, PX);
+  var scaleX = dir < 0 ? -1 : 1;
+
+  return React.createElement("div", { className: "creature-zone" },
+    React.createElement("div", {
+      style: {
+        position: "absolute",
+        bottom: "8px",
+        left: pos + "%",
+        width: (10*PX)+"px",
+        height: (10*PX)+"px",
+        transition: frame === "walk" ? "left 1.5s linear" : "left 0.3s ease",
+        transform: "scaleX("+scaleX+")"
+      }
+    },
+      React.createElement("div", {
+        style: {
+          width: PX+"px",
+          height: PX+"px",
+          boxShadow: shadow,
+          position: "absolute",
+          top: 0,
+          left: 0
+        }
+      }),
+      /* Hearts */
+      hearts.map(function(h) {
+        return React.createElement("span", {
+          key: h.id,
+          className: "heart-particle",
+          style: { left: (4*PX + h.x)+"px", top: (-4*PX)+"px" }
+        }, "\u2665");
+      }),
+      /* Zzz */
+      zzz.map(function(z) {
+        return React.createElement("span", {
+          key: z.id,
+          className: "zzz-particle",
+          style: { left: (6*PX + z.x)+"px", top: (-2*PX)+"px" }
+        }, "z");
+      })
+    )
+  );
+}
+
+/* ─── Starfield ─── */
+function Starfield() {
+  return React.createElement("div", { className: "starfield" },
+    React.createElement("div", { className: "stars-layer s1" }),
+    React.createElement("div", { className: "stars-layer s2" })
+  );
+}
+
+/* ─── Envelope Icons (SVG) ─── */
+function EnvelopeSealed() {
+  return React.createElement("svg", {
+    width: 16, height: 12, viewBox: "0 0 16 12",
+    style: { display:"inline-block", verticalAlign:"middle", marginRight:"6px", flexShrink:0 }
+  },
+    React.createElement("rect", { x:0, y:0, width:16, height:12, fill:"#f0a050", rx:1 }),
+    React.createElement("path", { d:"M0 0 L8 6 L16 0", fill:"none", stroke:"#0a0e1a", strokeWidth:1.5 }),
+    React.createElement("circle", { cx:8, cy:8, r:2, fill:"#c04020" })
+  );
+}
+function EnvelopeOpen() {
+  return React.createElement("svg", {
+    width: 16, height: 12, viewBox: "0 0 16 12",
+    style: { display:"inline-block", verticalAlign:"middle", marginRight:"6px", flexShrink:0, opacity:0.5 }
+  },
+    React.createElement("rect", { x:0, y:3, width:16, height:9, fill:"#3a3050", rx:1 }),
+    React.createElement("path", { d:"M0 3 L8 0 L16 3", fill:"#2a2040", stroke:"#3a3050", strokeWidth:0.5 }),
+    React.createElement("path", { d:"M0 3 L8 8 L16 3", fill:"none", stroke:"#4a4060", strokeWidth:1 })
+  );
 }
 
 /* ─── Header ─── */
 function Header(props) {
-  var page = props.page,
-    setPage = props.setPage,
-    setDetailFrom = props.setDetailFrom;
-  var navItems = [{
-    key: "home",
-    label: "HOME"
-  }, {
-    key: "log",
-    label: "LOG"
-  }, {
-    key: "words",
-    label: "WORDS"
-  }];
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      padding: "24px 16px 0"
-    }
-  }, /*#__PURE__*/React.createElement(NotebookIcon, {
-    size: 48
-  }), /*#__PURE__*/React.createElement("h1", {
-    style: {
-      fontSize: "24px",
-      color: "#3d2e1f",
-      letterSpacing: "6px",
-      textTransform: "uppercase",
-      margin: "8px 0 12px",
-      textShadow: "2px 2px 0 #d4c4a8"
-    }
-  }, "EMBER"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      borderTop: "2px dashed #d4c4a8",
-      margin: "0 auto 12px",
-      maxWidth: "560px"
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "center",
-      gap: "24px"
-    }
-  }, navItems.map(function (n) {
-    var active = page === n.key || page === "detail" && n.key === "home";
-    return /*#__PURE__*/React.createElement("button", {
-      key: n.key,
-      onClick: function () {
-        setPage(n.key);
-        if (n.key !== "detail") setDetailFrom(n.key);
-      },
-      className: "nav-btn",
-      style: {
-        color: active ? "#3d2e1f" : "#a89478",
-        borderBottom: active ? "2px solid #3d2e1f" : "2px solid transparent"
-      }
-    }, n.label);
-  })));
+  var page = props.page, setPage = props.setPage, setDetailFrom = props.setDetailFrom, unreadCount = props.unreadCount;
+  var navItems = [
+    { key: "home", label: "HOME" },
+    { key: "log", label: "LOG" },
+    { key: "words", label: "WORDS" }
+  ];
+  return React.createElement("div", { style: { textAlign:"center", padding:"24px 16px 0" } },
+    /* Ember flame icon */
+    React.createElement("div", { style: {
+      width:"32px", height:"32px", margin:"0 auto 8px",
+      background:"radial-gradient(circle at 50% 60%, #ffd080 0%, #f0a050 40%, #e06030 70%, transparent 100%)",
+      borderRadius:"50% 50% 50% 50% / 60% 60% 40% 40%",
+      boxShadow:"0 0 12px rgba(240,160,80,0.4)"
+    } }),
+    React.createElement("h1", {
+      style: { fontSize:"24px", color:"#e8dcc8", letterSpacing:"6px", textTransform:"uppercase",
+        margin:"4px 0 12px", textShadow:"0 0 8px rgba(240,160,80,0.3)" }
+    }, "EMBER"),
+    React.createElement("div", { style: { borderTop:"2px dashed #2a2040", margin:"0 auto 12px", maxWidth:"560px" } }),
+    React.createElement("div", { style: { display:"flex", justifyContent:"center", gap:"24px" } },
+      navItems.map(function(n) {
+        var active = page === n.key || (page === "detail" && n.key === "home");
+        return React.createElement("button", {
+          key: n.key,
+          onClick: function(){ setPage(n.key); if (n.key !== "detail") setDetailFrom(n.key); },
+          className: "nav-btn",
+          style: {
+            color: active ? "#f0a050" : "#6a5f80",
+            borderBottom: active ? "2px solid #f0a050" : "2px solid transparent",
+            position: "relative"
+          }
+        },
+          n.label,
+          n.key === "log" && unreadCount > 0 ? React.createElement("span", {
+            style: { position:"absolute", top:"-4px", right:"-10px", width:"6px", height:"6px",
+              background:"#f0a050", borderRadius:"50%", boxShadow:"0 0 4px #f0a050" }
+          }) : null
+        );
+      })
+    )
+  );
 }
 
 /* ─── TimeFeelBadge ─── */
 function TimeFeelBadge(props) {
   var tf = TIME_FEELS[props.timefeel] || TIME_FEELS.morning;
   var s = props.style || {};
-  return /*#__PURE__*/React.createElement("span", {
+  return React.createElement("span", {
     style: Object.assign({
-      display: "inline-block",
-      padding: "2px 8px",
-      fontSize: "9px",
-      letterSpacing: "3px",
-      textTransform: "uppercase",
-      color: "#faf5e8",
-      background: tf.color,
-      fontFamily: "'DotGothic16',monospace"
+      display:"inline-block", padding:"2px 8px", fontSize:"9px",
+      letterSpacing:"3px", textTransform:"uppercase",
+      color:"#0a0e1a", background:tf.color,
+      fontFamily:"'DotGothic16',monospace"
     }, s)
   }, tf.label);
 }
 
 /* ─── Annotation Input Bar ─── */
 function AnnotationBar(props) {
-  var quote = props.quote,
-    onSubmit = props.onSubmit,
-    onClear = props.onClear,
-    disabled = props.disabled;
-  var _t = useState("");
-  var text = _t[0];
-  var setText = _t[1];
+  var quote = props.quote, onSubmit = props.onSubmit, onClear = props.onClear, disabled = props.disabled;
+  var _t = useState(""); var text = _t[0], setText = _t[1];
   var inputRef = useRef(null);
-  useEffect(function () {
-    if (quote && inputRef.current) inputRef.current.focus();
-  }, [quote]);
+  useEffect(function(){ if (quote && inputRef.current) inputRef.current.focus(); }, [quote]);
   function handleSubmit() {
     if (!text.trim() || !quote) return;
     onSubmit(text.trim());
     setText("");
   }
   var canSend = quote && text.trim();
-  return /*#__PURE__*/React.createElement("div", {
-    className: "ann-bar"
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      maxWidth: "560px",
-      margin: "0 auto"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: "10px",
-      letterSpacing: "2px",
-      textTransform: "uppercase",
-      marginBottom: "6px",
-      minHeight: "16px",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap"
-    }
-  }, quote ? /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: "#b86840"
-    }
-  }, "「" + (quote.length > 30 ? quote.slice(0, 30) + "…" : quote) + "」", /*#__PURE__*/React.createElement("button", {
-    onClick: onClear,
-    className: "clear-btn"
-  }, "\u2715")) : /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: "#a89478"
-    }
-  }, "SELECT TEXT TO ANNOTATE")), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: "8px"
-    }
-  }, /*#__PURE__*/React.createElement("input", {
-    ref: inputRef,
-    value: text,
-    onChange: function (e) {
-      setText(e.target.value);
-    },
-    onKeyDown: function (e) {
-      if (e.key === "Enter") handleSubmit();
-    },
-    disabled: !quote || disabled,
-    placeholder: quote ? "Write your note..." : "",
-    className: "ann-input",
-    style: {
-      flex: 1,
-      opacity: quote ? 1 : 0.5
-    }
-  }), /*#__PURE__*/React.createElement("button", {
-    onClick: handleSubmit,
-    disabled: !canSend,
-    className: canSend ? "btn-dk" : "btn",
-    style: {
-      padding: "8px 14px"
-    }
-  }, "\u21B5"))));
+  return React.createElement("div", { className: "ann-bar" },
+    React.createElement("div", { style: { maxWidth:"560px", margin:"0 auto" } },
+      React.createElement("div", {
+        style: { fontSize:"10px", letterSpacing:"2px", textTransform:"uppercase",
+          marginBottom:"6px", minHeight:"16px", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }
+      },
+        quote
+          ? React.createElement("span", { style: { color:"#f0a050" } },
+              "\u300C" + (quote.length > 30 ? quote.slice(0,30) + "\u2026" : quote) + "\u300D",
+              React.createElement("button", { onClick: onClear, className: "clear-btn" }, "\u2715"))
+          : React.createElement("span", { style: { color:"#4a4060" } }, "SELECT TEXT TO ANNOTATE")
+      ),
+      React.createElement("div", { style: { display:"flex", gap:"8px" } },
+        React.createElement("input", {
+          ref: inputRef, value: text,
+          onChange: function(e){ setText(e.target.value); },
+          onKeyDown: function(e){ if(e.key==="Enter") handleSubmit(); },
+          disabled: !quote || disabled,
+          placeholder: quote ? "Write your note..." : "",
+          className: "ann-input",
+          style: { flex:1, opacity: quote ? 1 : 0.5 }
+        }),
+        React.createElement("button", {
+          onClick: handleSubmit, disabled: !canSend,
+          className: canSend ? "btn-dk" : "btn",
+          style: { padding:"8px 14px" }
+        }, "\u21B5")
+      )
+    )
+  );
 }
 
 /* ─── Entry Body with highlights ─── */
 function EntryBody(props) {
-  var body = props.body,
-    annotations = props.annotations,
-    onSelect = props.onSelect;
+  var body = props.body, annotations = props.annotations, onSelect = props.onSelect;
   function handleUp() {
     var sel = window.getSelection();
     var text = sel ? sel.toString().trim() : "";
@@ -383,804 +659,492 @@ function EntryBody(props) {
   function renderBody() {
     if (!annotations || annotations.length === 0) return body;
     var matches = [];
-    annotations.forEach(function (a) {
+    annotations.forEach(function(a) {
       var s = typeof a.quote_start === "number" ? a.quote_start : body.indexOf(a.quote);
       var e = typeof a.quote_end === "number" ? a.quote_end : s + a.quote.length;
-      if (s >= 0) matches.push({
-        start: s,
-        end: e
-      });
+      if (s >= 0) matches.push({ start: s, end: e });
     });
-    matches.sort(function (a, b) {
-      return a.start - b.start;
-    });
-    var parts = [];
-    var last = 0;
-    matches.forEach(function (m) {
+    matches.sort(function(a,b){ return a.start - b.start; });
+    var parts = []; var last = 0;
+    matches.forEach(function(m) {
       if (m.start >= last) {
-        if (m.start > last) parts.push({
-          t: body.slice(last, m.start),
-          h: false
-        });
-        parts.push({
-          t: body.slice(m.start, m.end),
-          h: true
-        });
+        if (m.start > last) parts.push({ t: body.slice(last, m.start), h: false });
+        parts.push({ t: body.slice(m.start, m.end), h: true });
         last = m.end;
       }
     });
-    if (last < body.length) parts.push({
-      t: body.slice(last),
-      h: false
-    });
+    if (last < body.length) parts.push({ t: body.slice(last), h: false });
     if (parts.length === 0) return body;
-    return parts.map(function (p, i) {
-      return p.h ? /*#__PURE__*/React.createElement("span", {
-        key: i,
-        className: "hl-text"
-      }, p.t) : /*#__PURE__*/React.createElement("span", {
-        key: i
-      }, p.t);
+    return parts.map(function(p,i) {
+      return p.h
+        ? React.createElement("span", { key: i, className: "hl-text" }, p.t)
+        : React.createElement("span", { key: i }, p.t);
     });
   }
-  return /*#__PURE__*/React.createElement("div", {
-    onMouseUp: handleUp,
-    onTouchEnd: handleUp,
-    style: {
-      fontSize: "15px",
-      lineHeight: 2.1,
-      whiteSpace: "pre-wrap",
-      color: "#3d2e1f",
-      userSelect: "text",
-      WebkitUserSelect: "text"
-    }
+  return React.createElement("div", {
+    onMouseUp: handleUp, onTouchEnd: handleUp,
+    style: { fontSize:"15px", lineHeight:2.1, whiteSpace:"pre-wrap", color:"#e8dcc8",
+      userSelect:"text", WebkitUserSelect:"text" }
   }, renderBody());
 }
 
 /* ─── Annotation Card ─── */
 function AnnotationCard(props) {
   var a = props.ann;
-  var time = a.created_at ? new Date(a.created_at).toLocaleTimeString("en", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false
-  }) : a.time || "";
-  return /*#__PURE__*/React.createElement("div", {
-    className: "ann-card"
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontStyle: "italic",
-      color: "#a89478",
-      fontSize: "12px",
-      lineHeight: 1.6,
-      borderLeft: "2px solid #d4c4a8",
-      paddingLeft: "10px",
-      marginBottom: "8px"
-    }
-  }, "「" + a.quote + "」"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: "13px",
-      color: "#3d2e1f",
-      lineHeight: 1.7
-    }
-  }, a.note || a.text), /*#__PURE__*/React.createElement("div", {
-    className: "label",
-    style: {
-      marginTop: "6px"
-    }
-  }, "IRIS \xB7 ", time));
+  var time = a.created_at ? new Date(a.created_at).toLocaleTimeString("en", { hour:"2-digit", minute:"2-digit", hour12:false }) : a.time || "";
+  return React.createElement("div", { className: "ann-card" },
+    React.createElement("div", {
+      style: { fontStyle:"italic", color:"#6a5f80", fontSize:"12px", lineHeight:1.6,
+        borderLeft:"2px solid #3a3050", paddingLeft:"10px", marginBottom:"8px" }
+    }, "\u300C" + a.quote + "\u300D"),
+    React.createElement("div", { style: { fontSize:"13px", color:"#e8dcc8", lineHeight:1.7 } }, a.note || a.text),
+    React.createElement("div", { className: "label", style: { marginTop:"6px" } }, "IRIS \u00B7 ", time)
+  );
 }
 
 /* ─── Entry View ─── */
 function EntryView(props) {
-  var entry = props.entry,
-    showBack = props.showBack,
-    onBack = props.onBack;
-  var _q = useState(null);
-  var quote = _q[0];
-  var setQuote = _q[1];
-  var _qs = useState(-1);
-  var quoteStart = _qs[0];
-  var setQuoteStart = _qs[1];
-  var _qe = useState(-1);
-  var quoteEnd = _qe[0];
-  var setQuoteEnd = _qe[1];
+  var entry = props.entry, showBack = props.showBack, onBack = props.onBack, onMarkRead = props.onMarkRead;
+  var _q = useState(null); var quote = _q[0], setQuote = _q[1];
+  var _qs = useState(-1); var quoteStart = _qs[0], setQuoteStart = _qs[1];
+  var _qe = useState(-1); var quoteEnd = _qe[0], setQuoteEnd = _qe[1];
   var _anns = useState(entry.annotations || []);
-  var annotations = _anns[0];
-  var setAnnotations = _anns[1];
-  var _sub = useState(false);
-  var submitting = _sub[0];
-  var setSubmitting = _sub[1];
+  var annotations = _anns[0], setAnnotations = _anns[1];
+  var _sub = useState(false); var submitting = _sub[0], setSubmitting = _sub[1];
   var tf = TIME_FEELS[entry.time_of_day] || TIME_FEELS.morning;
-  useEffect(function () {
-    setAnnotations(entry.annotations || []);
-    setQuote(null);
-    // if entry loaded without annotations, fetch them
-    if (entry.id && !entry.annotations) {
-      api("/annotations?entry_id=" + entry.id).then(function (data) {
-        if (Array.isArray(data)) setAnnotations(data);
-      }).catch(function (e) {
-        console.error(e);
-      });
+  var isUnread = !entry.discovered_at;
+
+  /* Mark as read on view */
+  useEffect(function() {
+    if (entry.id && isUnread && onMarkRead) {
+      apiPatch("/discover", { entry_id: entry.id }).then(function() {
+        onMarkRead(entry.id);
+      }).catch(function(e) { console.error("discover error:", e); });
     }
   }, [entry.id]);
-  function handleSelect(text, start, end) {
-    setQuote(text);
-    setQuoteStart(start);
-    setQuoteEnd(end);
-  }
+
+  useEffect(function() {
+    setAnnotations(entry.annotations || []);
+    setQuote(null);
+    if (entry.id && !entry.annotations) {
+      api("/annotations?entry_id=" + entry.id).then(function(data) {
+        if (Array.isArray(data)) setAnnotations(data);
+      }).catch(function(e){ console.error(e); });
+    }
+  }, [entry.id]);
+
+  function handleSelect(text, start, end) { setQuote(text); setQuoteStart(start); setQuoteEnd(end); }
   function handleAnnotation(noteText) {
     setSubmitting(true);
     apiPost("/annotations", {
-      entry_id: entry.id,
-      quote: quote,
-      quote_start: quoteStart,
-      quote_end: quoteEnd,
-      note: noteText
-    }).then(function (data) {
-      setAnnotations(function (prev) {
-        return prev.concat([data]);
-      });
-      setQuote(null);
-      setSubmitting(false);
+      entry_id: entry.id, quote: quote, quote_start: quoteStart, quote_end: quoteEnd, note: noteText
+    }).then(function(data) {
+      setAnnotations(function(prev){ return prev.concat([data]); });
+      setQuote(null); setSubmitting(false);
       window.getSelection && window.getSelection().removeAllRanges();
-    }).catch(function (e) {
+    }).catch(function(e) {
       console.error(e);
-      // fallback: add locally
-      var local = {
-        id: "l" + Date.now(),
-        quote: quote,
-        quote_start: quoteStart,
-        quote_end: quoteEnd,
-        note: noteText,
-        created_at: new Date().toISOString()
-      };
-      setAnnotations(function (prev) {
-        return prev.concat([local]);
-      });
-      setQuote(null);
-      setSubmitting(false);
+      var local = { id:"l"+Date.now(), quote:quote, quote_start:quoteStart, quote_end:quoteEnd,
+        note:noteText, created_at:new Date().toISOString() };
+      setAnnotations(function(prev){ return prev.concat([local]); });
+      setQuote(null); setSubmitting(false);
     });
   }
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      maxWidth: "560px",
-      margin: "0 auto",
-      padding: "20px 16px 120px"
-    }
-  }, showBack && /*#__PURE__*/React.createElement("button", {
-    onClick: onBack,
-    className: "btn",
-    style: {
-      marginBottom: "16px",
-      padding: "6px 14px"
-    }
-  }, "\u2190 BACK"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: "14px"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: "center",
-      gap: "10px"
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: "13px",
-      color: "#3d2e1f"
-    }
-  }, entry.entry_date || entry.date), /*#__PURE__*/React.createElement(TimeFeelBadge, {
-    timefeel: entry.time_of_day || entry.timefeel
-  })), /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "right"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "label",
-    style: {
-      fontSize: "8px",
-      marginBottom: "2px"
-    }
-  }, "WORD OF THE DAY"), /*#__PURE__*/React.createElement("div", {
-    style: {
-      fontSize: "20px",
-      color: "#3d2818"
-    }
-  }, entry.word_of_day || entry.word))), /*#__PURE__*/React.createElement("div", {
-    style: {
-      borderLeft: "4px solid " + tf.color,
-      background: "#faf5e8",
-      padding: "24px 24px 24px 20px",
-      boxShadow: "3px 3px 0 #d4c4a8",
-      marginBottom: "20px"
-    }
-  }, /*#__PURE__*/React.createElement(EntryBody, {
-    body: entry.body,
-    annotations: annotations,
-    onSelect: handleSelect
-  })), annotations.length > 0 && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
-    style: {
-      borderTop: "2px dashed #d4c4a8",
-      marginBottom: "14px"
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "label",
-    style: {
-      marginBottom: "10px"
-    }
-  }, annotations.length, " ANNOTATION", annotations.length > 1 ? "S" : ""), annotations.map(function (a) {
-    return /*#__PURE__*/React.createElement(AnnotationCard, {
-      key: a.id,
-      ann: a
-    });
-  })), /*#__PURE__*/React.createElement(AnnotationBar, {
-    quote: quote,
-    disabled: submitting,
-    onSubmit: handleAnnotation,
-    onClear: function () {
-      setQuote(null);
-      window.getSelection && window.getSelection().removeAllRanges();
-    }
-  }));
+
+  return React.createElement("div", { style: { maxWidth:"560px", margin:"0 auto", padding:"20px 16px 120px" } },
+    showBack && React.createElement("button", {
+      onClick: onBack, className: "btn", style: { marginBottom:"16px", padding:"6px 14px" }
+    }, "\u2190 BACK"),
+    React.createElement("div", {
+      style: { display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"14px" }
+    },
+      React.createElement("div", { style: { display:"flex", alignItems:"center", gap:"10px" } },
+        React.createElement("span", { style: { fontSize:"13px", color:"#e8dcc8" } },
+          entry.entry_date || entry.date),
+        React.createElement(TimeFeelBadge, { timefeel: entry.time_of_day || entry.timefeel })
+      ),
+      React.createElement("div", { style: { textAlign:"right" } },
+        React.createElement("div", { className: "label", style: { fontSize:"8px", marginBottom:"2px" } }, "WORD OF THE DAY"),
+        React.createElement("div", { style: { fontSize:"20px", color:"#ffd080" } }, entry.word_of_day || entry.word)
+      )
+    ),
+    /* Entry body on dark panel */
+    React.createElement("div", {
+      style: {
+        borderLeft: "4px solid " + tf.color,
+        background: "#111528",
+        padding: "24px 24px 24px 20px",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
+        marginBottom: "20px",
+        border: "2px solid #1a1530",
+        borderLeftWidth: "4px",
+        borderLeftColor: tf.color
+      }
+    }, React.createElement(EntryBody, { body: entry.body, annotations: annotations, onSelect: handleSelect })),
+    annotations.length > 0 && React.createElement("div", null,
+      React.createElement("div", { style: { borderTop:"2px dashed #2a2040", marginBottom:"14px" } }),
+      React.createElement("div", { className: "label", style: { marginBottom:"10px" } },
+        annotations.length, " ANNOTATION", annotations.length > 1 ? "S" : ""),
+      annotations.map(function(a) { return React.createElement(AnnotationCard, { key: a.id, ann: a }); })
+    ),
+    React.createElement(AnnotationBar, {
+      quote: quote, disabled: submitting, onSubmit: handleAnnotation,
+      onClear: function(){ setQuote(null); window.getSelection && window.getSelection().removeAllRanges(); }
+    })
+  );
 }
 
-/* ─── LOG Page ─── */
+/* ─── LOG Page (with shelves) ─── */
 function LogPage(props) {
-  var entries = props.entries,
-    onSelect = props.onSelect;
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      maxWidth: "560px",
-      margin: "0 auto",
-      padding: "20px 16px 40px"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "label",
-    style: {
-      marginBottom: "12px"
-    }
-  }, entries.length, " ENTRIES"), entries.map(function (e) {
-    var tf = TIME_FEELS[e.time_of_day] || TIME_FEELS.morning;
-    var preview = e.body.replace(/\n/g, " ").slice(0, 50) + (e.body.length > 50 ? "…" : "");
-    var annCount = e.annotation_count || (e.annotations ? e.annotations.length : 0);
-    return /*#__PURE__*/React.createElement("div", {
-      key: e.id,
-      onClick: function () {
-        onSelect(e);
-      },
-      className: "log-card",
-      onMouseEnter: function (ev) {
-        ev.currentTarget.style.transform = "translate(-1px,-1px)";
-      },
-      onMouseLeave: function (ev) {
-        ev.currentTarget.style.transform = "translate(0,0)";
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: "5px",
-        background: tf.color,
-        flexShrink: 0
-      }
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        padding: "12px 14px",
-        flex: 1,
-        overflow: "hidden"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: "4px"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        alignItems: "center",
-        gap: "8px"
-      }
-    }, /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: "12px",
-        color: "#3d2e1f"
-      }
-    }, e.entry_date), /*#__PURE__*/React.createElement(TimeFeelBadge, {
-      timefeel: e.time_of_day,
-      style: {
-        fontSize: "8px",
-        padding: "1px 6px"
-      }
-    })), /*#__PURE__*/React.createElement("span", {
-      style: {
-        fontSize: "16px",
-        color: "#3d2818"
-      }
-    }, e.word_of_day)), /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "12px",
-        color: "#a89478",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap"
-      }
-    }, preview), annCount > 0 && /*#__PURE__*/React.createElement("div", {
-      className: "label",
-      style: {
-        fontSize: "8px",
-        marginTop: "4px",
-        color: "#b86840"
-      }
-    }, annCount, " ANNOTATION", annCount > 1 ? "S" : "")));
-  }), entries.length === 0 && /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      color: "#a89478",
-      fontSize: "12px",
-      padding: "40px 0"
-    }
-  }, "No entries yet."));
+  var entries = props.entries, onSelect = props.onSelect;
+  return React.createElement("div", { style: { maxWidth:"560px", margin:"0 auto", padding:"20px 16px 40px" } },
+    React.createElement("div", { className: "label", style: { marginBottom:"12px" } },
+      entries.length, " ENTRIES"),
+    entries.map(function(e) {
+      var tf = TIME_FEELS[e.time_of_day] || TIME_FEELS.morning;
+      var preview = e.body.replace(/\n/g, " ").slice(0,50) + (e.body.length > 50 ? "\u2026" : "");
+      var annCount = e.annotation_count || (e.annotations ? e.annotations.length : 0);
+      var isUnread = !e.discovered_at;
+      return React.createElement("div", { key: e.id, className: "shelf-plank" },
+        React.createElement("div", {
+          onClick: function(){ onSelect(e); },
+          className: "log-card" + (isUnread ? " unread" : ""),
+          onMouseEnter: function(ev){ ev.currentTarget.style.transform = "translate(-1px,-1px)"; },
+          onMouseLeave: function(ev){ ev.currentTarget.style.transform = "translate(0,0)"; }
+        },
+          React.createElement("div", { style: { width:"5px", background: tf.color, flexShrink:0 } }),
+          React.createElement("div", { style: { padding:"12px 14px", flex:1, overflow:"hidden" } },
+            React.createElement("div", {
+              style: { display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"4px" }
+            },
+              React.createElement("div", { style: { display:"flex", alignItems:"center", gap:"8px" } },
+                isUnread ? React.createElement(EnvelopeSealed, null) : React.createElement(EnvelopeOpen, null),
+                React.createElement("span", { style: { fontSize:"12px", color:"#e8dcc8" } }, e.entry_date),
+                React.createElement(TimeFeelBadge, { timefeel: e.time_of_day, style: { fontSize:"8px", padding:"1px 6px" } })
+              ),
+              React.createElement("span", { style: { fontSize:"16px", color:"#ffd080" } }, e.word_of_day)
+            ),
+            React.createElement("div", {
+              style: { fontSize:"12px", color:"#6a5f80", overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }
+            }, preview),
+            annCount > 0 && React.createElement("div", {
+              className: "label", style: { fontSize:"8px", marginTop:"4px", color:"#f0a050" }
+            }, annCount, " ANNOTATION", annCount > 1 ? "S" : "")
+          )
+        )
+      );
+    }),
+    entries.length === 0 && React.createElement("div", {
+      style: { textAlign:"center", color:"#4a4060", fontSize:"12px", padding:"40px 0" }
+    }, "No entries yet.")
+  );
 }
 
 /* ─── WORDS (Calendar) Page ─── */
 function WordsPage(props) {
-  var entries = props.entries,
-    onSelect = props.onSelect;
-  var _mo = useState(0);
-  var monthOffset = _mo[0];
-  var setMonthOffset = _mo[1];
+  var entries = props.entries, onSelect = props.onSelect;
+  var _mo = useState(0); var monthOffset = _mo[0], setMonthOffset = _mo[1];
   var now = new Date();
   var viewDate = new Date(now.getFullYear(), now.getMonth() + monthOffset, 1);
-  var year = viewDate.getFullYear();
-  var month = viewDate.getMonth();
+  var year = viewDate.getFullYear(); var month = viewDate.getMonth();
   var daysInMonth = new Date(year, month + 1, 0).getDate();
   var firstDow = new Date(year, month, 1).getDay();
-  var monthStr = viewDate.toLocaleDateString("en", {
-    year: "numeric",
-    month: "long"
-  }).toUpperCase();
-  var entryMap = useMemo(function () {
+  var monthStr = viewDate.toLocaleDateString("en", { year:"numeric", month:"long" }).toUpperCase();
+  var entryMap = useMemo(function() {
     var m = {};
-    entries.forEach(function (e) {
-      m[e.entry_date] = e;
-    });
+    entries.forEach(function(e){ m[e.entry_date] = e; });
     return m;
   }, [entries]);
   var cells = [];
   for (var i = 0; i < firstDow; i++) cells.push(null);
   for (var d = 1; d <= daysInMonth; d++) {
-    var ds = year + "-" + String(month + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0");
-    cells.push({
-      day: d,
-      entry: entryMap[ds] || null
-    });
+    var ds = year + "-" + String(month+1).padStart(2,"0") + "-" + String(d).padStart(2,"0");
+    cells.push({ day: d, entry: entryMap[ds] || null });
   }
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      maxWidth: "560px",
-      margin: "0 auto",
-      padding: "20px 16px 40px"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: "16px"
-    }
-  }, /*#__PURE__*/React.createElement("button", {
-    onClick: function () {
-      setMonthOffset(function (p) {
-        return p - 1;
-      });
+  return React.createElement("div", { style: { maxWidth:"560px", margin:"0 auto", padding:"20px 16px 40px" } },
+    React.createElement("div", {
+      style: { display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"16px" }
     },
-    className: "btn",
-    style: {
-      padding: "6px 12px"
-    }
-  }, "\u2190"), /*#__PURE__*/React.createElement("div", {
-    className: "label",
-    style: {
-      fontSize: "11px",
-      color: "#3d2e1f"
-    }
-  }, monthStr), /*#__PURE__*/React.createElement("button", {
-    onClick: function () {
-      setMonthOffset(function (p) {
-        return p + 1;
-      });
-    },
-    className: "btn",
-    style: {
-      padding: "6px 12px"
-    }
-  }, "\u2192")), /*#__PURE__*/React.createElement("div", {
-    className: "dow-header"
-  }, ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"].map(function (d) {
-    return /*#__PURE__*/React.createElement("div", {
-      key: d,
-      style: {
-        textAlign: "center",
-        fontSize: "8px",
-        letterSpacing: "2px",
-        color: "#a89478"
-      }
-    }, d);
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "cal-grid"
-  }, cells.map(function (cell, i) {
-    if (!cell) return /*#__PURE__*/React.createElement("div", {
-      key: "e" + i
-    });
-    var e = cell.entry;
-    var tf = e ? TIME_FEELS[e.time_of_day] || TIME_FEELS.morning : null;
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      onClick: function () {
-        if (e) onSelect(e);
-      },
-      className: e ? "cal-cell cal-filled" : "cal-cell cal-empty",
-      onMouseEnter: function (ev) {
-        if (e) ev.currentTarget.style.transform = "translate(-1px,-1px)";
-      },
-      onMouseLeave: function (ev) {
-        ev.currentTarget.style.transform = "translate(0,0)";
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "8px",
-        color: "#a89478"
-      }
-    }, cell.day), e ? /*#__PURE__*/React.createElement("div", {
-      style: {
-        fontSize: "16px",
-        color: "#3d2818",
-        textAlign: "center",
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }
-    }, e.word_of_day) : /*#__PURE__*/React.createElement("div", {
-      style: {
-        flex: 1,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: "4px",
-        height: "4px",
-        background: "#d4c4a8"
-      }
-    })), tf && /*#__PURE__*/React.createElement("div", {
-      style: {
-        height: "3px",
-        background: tf.color,
-        margin: "0 -3px -3px"
-      }
-    }));
-  })));
+      React.createElement("button", { onClick: function(){ setMonthOffset(function(p){ return p-1; }); },
+        className: "btn", style: { padding:"6px 12px" } }, "\u2190"),
+      React.createElement("div", { className: "label", style: { fontSize:"11px", color:"#e8dcc8" } }, monthStr),
+      React.createElement("button", { onClick: function(){ setMonthOffset(function(p){ return p+1; }); },
+        className: "btn", style: { padding:"6px 12px" } }, "\u2192")
+    ),
+    React.createElement("div", { className: "dow-header" },
+      ["SUN","MON","TUE","WED","THU","FRI","SAT"].map(function(d) {
+        return React.createElement("div", {
+          key: d, style: { textAlign:"center", fontSize:"8px", letterSpacing:"2px", color:"#4a4060" }
+        }, d);
+      })
+    ),
+    React.createElement("div", { className: "cal-grid" },
+      cells.map(function(cell, i) {
+        if (!cell) return React.createElement("div", { key: "e"+i });
+        var e = cell.entry;
+        var tf = e ? (TIME_FEELS[e.time_of_day] || TIME_FEELS.morning) : null;
+        var isUnread = e && !e.discovered_at;
+        return React.createElement("div", {
+          key: i,
+          onClick: function(){ if(e) onSelect(e); },
+          className: e ? ("cal-cell cal-filled" + (isUnread ? " unread" : "")) : "cal-cell cal-empty",
+          onMouseEnter: function(ev){ if(e) ev.currentTarget.style.transform = "translate(-1px,-1px)"; },
+          onMouseLeave: function(ev){ ev.currentTarget.style.transform = "translate(0,0)"; }
+        },
+          React.createElement("div", { style: { fontSize:"8px", color:"#4a4060" } }, cell.day),
+          e ? React.createElement("div", {
+            style: { fontSize:"16px", color:"#ffd080", textAlign:"center", flex:1,
+              display:"flex", alignItems:"center", justifyContent:"center" }
+          }, e.word_of_day)
+            : React.createElement("div", {
+              style: { flex:1, display:"flex", alignItems:"center", justifyContent:"center" }
+            }, React.createElement("div", { style: { width:"4px", height:"4px", background:"#1a1530" } })),
+          tf && React.createElement("div", {
+            style: { height:"3px", background:tf.color, margin:"0 -3px -3px" }
+          }),
+          isUnread && React.createElement("div", {
+            style: { position:"absolute", top:"2px", right:"2px", width:"4px", height:"4px",
+              background:"#f0a050", borderRadius:"50%", boxShadow:"0 0 3px #f0a050" }
+          })
+        );
+      })
+    )
+  );
 }
 
 /* ─── Main App ─── */
 function App() {
-  var hasApi = !!getApiBase();
   var _page = useState(isSetup() ? "locked" : "connect");
-  var page = _page[0];
-  var setPage = _page[1];
+  var page = _page[0], setPage = _page[1];
   var _entries = useState([]);
-  var entries = _entries[0];
-  var setEntries = _entries[1];
+  var entries = _entries[0], setEntries = _entries[1];
   var _detail = useState(null);
-  var detailEntry = _detail[0];
-  var setDetailEntry = _detail[1];
+  var detailEntry = _detail[0], setDetailEntry = _detail[1];
   var _from = useState("log");
-  var detailFrom = _from[0];
-  var setDetailFrom = _from[1];
+  var detailFrom = _from[0], setDetailFrom = _from[1];
   var _loading = useState(false);
-  var loading = _loading[0];
-  var setLoading = _loading[1];
+  var loading = _loading[0], setLoading = _loading[1];
   var _url = useState("");
-  var connectUrl = _url[0];
-  var setConnectUrl = _url[1];
+  var connectUrl = _url[0], setConnectUrl = _url[1];
   var _err = useState("");
-  var errMsg = _err[0];
-  var setErrMsg = _err[1];
+  var errMsg = _err[0], setErrMsg = _err[1];
   var _connecting = useState(false);
-  var connecting = _connecting[0];
-  var setConnecting = _connecting[1];
+  var connecting = _connecting[0], setConnecting = _connecting[1];
   var _pinInput = useState("");
-  var pinInput = _pinInput[0];
-  var setPinInput = _pinInput[1];
+  var pinInput = _pinInput[0], setPinInput = _pinInput[1];
   var _pinConfirm = useState("");
-  var pinConfirm = _pinConfirm[0];
-  var setPinConfirm = _pinConfirm[1];
+  var pinConfirm = _pinConfirm[0], setPinConfirm = _pinConfirm[1];
   var _pinErr = useState("");
-  var pinErr = _pinErr[0];
-  var setPinErr = _pinErr[1];
-  function loadEntries() {
-    setLoading(true);
-    api("").then(function (data) {
-      if (Array.isArray(data)) setEntries(data);
-      setLoading(false);
-    }).catch(function (e) {
-      console.error(e);
-      setLoading(false);
+  var pinErr = _pinErr[0], setPinErr = _pinErr[1];
+
+  var unreadCount = useMemo(function() {
+    return entries.filter(function(e){ return !e.discovered_at; }).length;
+  }, [entries]);
+
+  function markRead(entryId) {
+    setEntries(function(prev) {
+      return prev.map(function(e) {
+        if (e.id === entryId) return Object.assign({}, e, { discovered_at: new Date().toISOString() });
+        return e;
+      });
     });
   }
-  useEffect(function () {
-    if (getApiBase() && page !== "connect") loadEntries();
+
+  function loadEntries() {
+    setLoading(true);
+    api("").then(function(data) {
+      if (Array.isArray(data)) setEntries(data);
+      setLoading(false);
+    }).catch(function(e) { console.error(e); setLoading(false); });
+  }
+
+  useEffect(function() {
+    if (getApiBase() && page !== "connect" && page !== "locked") loadEntries();
   }, [page]);
+
   function openDetail(entry, from) {
-    // fetch full entry with annotations
     if (entry.id && getApiBase()) {
-      api("/entry?id=" + entry.id).then(function (full) {
-        setDetailEntry(full);
-        setDetailFrom(from);
-        setPage("detail");
-      }).catch(function (e) {
-        console.error(e);
-        setDetailEntry(entry);
-        setDetailFrom(from);
-        setPage("detail");
+      api("/entry?id=" + entry.id).then(function(full) {
+        setDetailEntry(full); setDetailFrom(from); setPage("detail");
+      }).catch(function(e) {
+        console.error(e); setDetailEntry(entry); setDetailFrom(from); setPage("detail");
       });
     } else {
-      setDetailEntry(entry);
-      setDetailFrom(from);
-      setPage("detail");
+      setDetailEntry(entry); setDetailFrom(from); setPage("detail");
     }
   }
+
   function handleConnect() {
     if (!connectUrl.trim() || !pinInput.trim()) return;
     if (pinInput !== pinConfirm) { setErrMsg("PIN does not match"); return; }
     if (pinInput.length < 4) { setErrMsg("PIN must be at least 4 characters"); return; }
     var url = connectUrl.trim().replace(/\/$/, "");
     var testUrl = url + "/functions/v1/ember";
-    setErrMsg("");
-    setConnecting(true);
-    fetch(testUrl, {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }).then(function (r) {
-      setConnecting(false);
-      if (r.ok) {
-        hashPin(pinInput).then(function(h) {
-          localStorage.setItem("ember_url", url);
-          localStorage.setItem("ember_pin", h);
-          window.location.hash = "";
-          setPage("home");
-        });
-      } else {
-        r.text().then(function (t) {
-          setErrMsg("Failed (" + r.status + "): " + t.slice(0, 80));
-        });
-      }
-    }).catch(function (e) {
-      setConnecting(false);
-      setErrMsg("Cannot reach: " + e.message);
-    });
+    setErrMsg(""); setConnecting(true);
+    fetch(testUrl, { headers: { "Content-Type": "application/json" } })
+      .then(function(r) {
+        setConnecting(false);
+        if (r.ok) {
+          hashPin(pinInput).then(function(h) {
+            localStorage.setItem("ember_url", url);
+            localStorage.setItem("ember_pin", h);
+            window.location.hash = "";
+            setPage("home");
+          });
+        } else {
+          r.text().then(function(t) { setErrMsg("Failed ("+r.status+"): "+t.slice(0,80)); });
+        }
+      })
+      .catch(function(e) { setConnecting(false); setErrMsg("Cannot reach: "+e.message); });
   }
+
   function handleUnlock() {
     if (!pinInput.trim()) return;
     setPinErr("");
     hashPin(pinInput).then(function(h) {
       if (h === localStorage.getItem("ember_pin")) {
-        setPage("home");
-        setPinInput("");
+        setPage("home"); setPinInput("");
       } else {
-        setPinErr("Wrong PIN");
-        setPinInput("");
+        setPinErr("Wrong PIN"); setPinInput("");
       }
     });
   }
+
   function handleReset() {
     if (confirm("This will disconnect Ember. You will need to re-enter the Supabase URL and set a new PIN.")) {
       localStorage.removeItem("ember_url");
       localStorage.removeItem("ember_pin");
-      setPage("connect");
-      setPinInput("");
-      setPinErr("");
+      setPage("connect"); setPinInput(""); setPinErr("");
     }
   }
+
   var latest = entries.length > 0 ? entries[0] : null;
+  var showCreature = page !== "connect" && page !== "locked";
 
   /* ── LOCKED ── */
   if (page === "locked") {
-    return /*#__PURE__*/React.createElement("div", {
-      className: "shell"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "dot-bg"
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
-        position: "relative",
-        zIndex: 1,
-        padding: "20px"
-      }
-    }, /*#__PURE__*/React.createElement(NotebookIcon, {
-      size: 60
-    }), /*#__PURE__*/React.createElement("h1", {
-      style: {
-        fontSize: "24px",
-        color: "#3d2e1f",
-        letterSpacing: "6px",
-        margin: "12px 0 8px",
-        textShadow: "2px 2px 0 #d4c4a8"
-      }
-    }, "EMBER"), /*#__PURE__*/React.createElement("div", {
-      className: "label",
-      style: { marginBottom: "24px" }
-    }, "ENTER PIN TO UNLOCK"), /*#__PURE__*/React.createElement("div", {
-      style: { width: "100%", maxWidth: "360px" }
-    }, /*#__PURE__*/React.createElement("input", {
-      className: "input",
-      type: "password",
-      value: pinInput,
-      onChange: function (e) { setPinInput(e.target.value); },
-      onKeyDown: function (e) { if (e.key === "Enter") handleUnlock(); },
-      placeholder: "PIN",
-      style: { textAlign: "center", letterSpacing: "8px", fontSize: "18px" }
-    }), pinErr && /*#__PURE__*/React.createElement("div", {
-      style: { color: "#b86840", fontSize: "11px", marginTop: "8px", textAlign: "center" }
-    }, pinErr), /*#__PURE__*/React.createElement("button", {
-      onClick: handleUnlock,
-      className: "btn-dk",
-      style: { width: "100%", marginTop: "16px" }
-    }, "UNLOCK"), /*#__PURE__*/React.createElement("button", {
-      onClick: handleReset,
-      className: "clear-btn",
-      style: { width: "100%", marginTop: "12px", textAlign: "center", fontSize: "9px" }
-    }, "DISCONNECT & RESET"))));
+    return React.createElement("div", { className: "shell" },
+      React.createElement(Starfield, null),
+      React.createElement("div", {
+        style: { display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
+          minHeight:"100vh", position:"relative", zIndex:1, padding:"20px" }
+      },
+        React.createElement("div", { style: {
+          width:"48px", height:"48px", margin:"0 auto 12px",
+          background:"radial-gradient(circle at 50% 60%, #ffd080 0%, #f0a050 40%, #e06030 70%, transparent 100%)",
+          borderRadius:"50% 50% 50% 50% / 60% 60% 40% 40%",
+          boxShadow:"0 0 20px rgba(240,160,80,0.4)"
+        } }),
+        React.createElement("h1", {
+          style: { fontSize:"24px", color:"#e8dcc8", letterSpacing:"6px", margin:"4px 0 8px",
+            textShadow:"0 0 8px rgba(240,160,80,0.3)" }
+        }, "EMBER"),
+        React.createElement("div", { className:"label", style:{ marginBottom:"24px" } }, "ENTER PIN TO UNLOCK"),
+        React.createElement("div", { style:{ width:"100%", maxWidth:"360px" } },
+          React.createElement("input", {
+            className:"input", type:"password", value:pinInput,
+            onChange:function(e){ setPinInput(e.target.value); },
+            onKeyDown:function(e){ if(e.key==="Enter") handleUnlock(); },
+            placeholder:"PIN",
+            style:{ textAlign:"center", letterSpacing:"8px", fontSize:"18px" }
+          }),
+          pinErr && React.createElement("div", {
+            style:{ color:"#f06060", fontSize:"11px", marginTop:"8px", textAlign:"center" }
+          }, pinErr),
+          React.createElement("button", {
+            onClick:handleUnlock, className:"btn-dk", style:{ width:"100%", marginTop:"16px" }
+          }, "UNLOCK"),
+          React.createElement("button", {
+            onClick:handleReset, className:"clear-btn",
+            style:{ width:"100%", marginTop:"12px", textAlign:"center", fontSize:"9px" }
+          }, "DISCONNECT & RESET")
+        )
+      )
+    );
   }
 
   /* ── CONNECT ── */
   if (page === "connect") {
-    return /*#__PURE__*/React.createElement("div", {
-      className: "shell"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "dot-bg"
-    }), /*#__PURE__*/React.createElement("div", {
-      style: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
-        position: "relative",
-        zIndex: 1,
-        padding: "20px"
-      }
-    }, /*#__PURE__*/React.createElement(NotebookIcon, {
-      size: 60
-    }), /*#__PURE__*/React.createElement("h1", {
-      style: {
-        fontSize: "24px",
-        color: "#3d2e1f",
-        letterSpacing: "6px",
-        margin: "12px 0 8px",
-        textShadow: "2px 2px 0 #d4c4a8"
-      }
-    }, "EMBER"), /*#__PURE__*/React.createElement("div", {
-      className: "label",
-      style: {
-        marginBottom: "24px"
-      }
-    }, "CONNECT YOUR DIARY"), /*#__PURE__*/React.createElement("div", {
-      style: {
-        width: "100%",
-        maxWidth: "360px"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "label",
-      style: {
-        marginBottom: "6px"
-      }
-    }, "SUPABASE URL"), /*#__PURE__*/React.createElement("input", {
-      className: "input",
-      value: connectUrl,
-      onChange: function (e) {
-        setConnectUrl(e.target.value);
+    return React.createElement("div", { className: "shell" },
+      React.createElement(Starfield, null),
+      React.createElement("div", {
+        style: { display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
+          minHeight:"100vh", position:"relative", zIndex:1, padding:"20px" }
       },
-      placeholder: "https://xxx.supabase.co"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "label",
-      style: { marginTop: "16px", marginBottom: "6px" }
-    }, "SET PIN"), /*#__PURE__*/React.createElement("input", {
-      className: "input",
-      type: "password",
-      value: pinInput,
-      onChange: function (e) { setPinInput(e.target.value); },
-      placeholder: "Enter PIN (4+ characters)"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "label",
-      style: { marginTop: "10px", marginBottom: "6px" }
-    }, "CONFIRM PIN"), /*#__PURE__*/React.createElement("input", {
-      className: "input",
-      type: "password",
-      value: pinConfirm,
-      onChange: function (e) { setPinConfirm(e.target.value); },
-      placeholder: "Confirm PIN"
-    }), /*#__PURE__*/React.createElement("button", {
-      onClick: handleConnect,
-      className: "btn-dk",
-      style: {
-        width: "100%",
-        padding: "10px",
-        marginTop: "12px",
-        opacity: connecting ? 0.6 : 1
-      }
-    }, connecting ? "TESTING..." : "CONNECT"), errMsg && /*#__PURE__*/React.createElement("div", {
-      className: "err-box"
-    }, errMsg)), /*#__PURE__*/React.createElement("div", {
-      className: "footer",
-      style: {
-        position: "absolute",
-        bottom: "24px"
-      }
-    }, "EMBER \xB7 Built with \u2661 by Iris & Lux")));
+        React.createElement("div", { style: {
+          width:"48px", height:"48px", margin:"0 auto 12px",
+          background:"radial-gradient(circle at 50% 60%, #ffd080 0%, #f0a050 40%, #e06030 70%, transparent 100%)",
+          borderRadius:"50% 50% 50% 50% / 60% 60% 40% 40%",
+          boxShadow:"0 0 20px rgba(240,160,80,0.4)"
+        } }),
+        React.createElement("h1", {
+          style: { fontSize:"24px", color:"#e8dcc8", letterSpacing:"6px", margin:"4px 0 8px",
+            textShadow:"0 0 8px rgba(240,160,80,0.3)" }
+        }, "EMBER"),
+        React.createElement("div", { className:"label", style:{ marginBottom:"24px" } }, "CONNECT YOUR DIARY"),
+        React.createElement("div", { style:{ width:"100%", maxWidth:"360px" } },
+          React.createElement("div", { className:"label", style:{ marginBottom:"6px" } }, "SUPABASE URL"),
+          React.createElement("input", {
+            className:"input", value:connectUrl,
+            onChange:function(e){ setConnectUrl(e.target.value); },
+            placeholder:"https://xxx.supabase.co"
+          }),
+          React.createElement("div", { className:"label", style:{ marginTop:"16px", marginBottom:"6px" } }, "SET PIN"),
+          React.createElement("input", {
+            className:"input", type:"password", value:pinInput,
+            onChange:function(e){ setPinInput(e.target.value); },
+            placeholder:"Enter PIN (4+ characters)"
+          }),
+          React.createElement("div", { className:"label", style:{ marginTop:"10px", marginBottom:"6px" } }, "CONFIRM PIN"),
+          React.createElement("input", {
+            className:"input", type:"password", value:pinConfirm,
+            onChange:function(e){ setPinConfirm(e.target.value); },
+            placeholder:"Confirm PIN"
+          }),
+          React.createElement("button", {
+            onClick:handleConnect, className:"btn-dk",
+            style:{ width:"100%", padding:"10px", marginTop:"12px", opacity:connecting?0.6:1 }
+          }, connecting ? "TESTING..." : "CONNECT"),
+          errMsg && React.createElement("div", { className:"err-box" }, errMsg)
+        ),
+        React.createElement("div", { className:"footer", style:{ position:"absolute", bottom:"24px" } },
+          "EMBER \u00B7 Built with \u2661 by Iris & Lux")
+      )
+    );
   }
-  return /*#__PURE__*/React.createElement("div", {
-    className: "shell"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "dot-bg"
-  }), /*#__PURE__*/React.createElement("div", {
-    style: {
-      position: "relative",
-      zIndex: 1
-    }
-  }, /*#__PURE__*/React.createElement(Header, {
-    page: page,
-    setPage: setPage,
-    setDetailFrom: setDetailFrom
-  }), page === "home" && !loading && latest && /*#__PURE__*/React.createElement(EntryView, {
-    entry: latest,
-    showBack: false
-  }), page === "home" && !loading && !latest && /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      color: "#a89478",
-      fontSize: "12px",
-      padding: "60px 16px"
-    }
-  }, "No entries yet. Lux hasn't written anything."), page === "home" && loading && /*#__PURE__*/React.createElement("div", {
-    style: {
-      textAlign: "center",
-      color: "#a89478",
-      fontSize: "12px",
-      padding: "60px 16px"
-    }
-  }, "Loading..."), page === "log" && /*#__PURE__*/React.createElement(LogPage, {
-    entries: entries,
-    onSelect: function (e) {
-      openDetail(e, "log");
-    }
-  }), page === "words" && /*#__PURE__*/React.createElement(WordsPage, {
-    entries: entries,
-    onSelect: function (e) {
-      openDetail(e, "words");
-    }
-  }), page === "detail" && detailEntry && /*#__PURE__*/React.createElement(EntryView, {
-    entry: detailEntry,
-    showBack: true,
-    onBack: function () {
-      setPage(detailFrom);
-    }
-  }), (page === "log" || page === "words") && /*#__PURE__*/React.createElement("div", {
-    className: "footer"
-  }, "EMBER \xB7 Built with \u2661 by Iris & Lux")));
+
+  /* ── MAIN ── */
+  return React.createElement("div", { className: "shell" },
+    React.createElement(Starfield, null),
+    React.createElement("div", { style: { position:"relative", zIndex:1, paddingBottom:"60px" } },
+      React.createElement(Header, { page:page, setPage:setPage, setDetailFrom:setDetailFrom, unreadCount:unreadCount }),
+      page === "home" && !loading && latest && React.createElement(EntryView, {
+        entry: latest, showBack: false, onMarkRead: markRead
+      }),
+      page === "home" && !loading && !latest && React.createElement("div", {
+        style: { textAlign:"center", color:"#4a4060", fontSize:"12px", padding:"60px 16px" }
+      }, "No entries yet. Lux hasn\u2019t written anything."),
+      page === "home" && loading && React.createElement("div", {
+        style: { textAlign:"center", color:"#4a4060", fontSize:"12px", padding:"60px 16px" }
+      }, "Loading..."),
+      page === "log" && React.createElement(LogPage, {
+        entries: entries, onSelect: function(e){ openDetail(e, "log"); }
+      }),
+      page === "words" && React.createElement(WordsPage, {
+        entries: entries, onSelect: function(e){ openDetail(e, "words"); }
+      }),
+      page === "detail" && detailEntry && React.createElement(EntryView, {
+        entry: detailEntry, showBack: true, onMarkRead: markRead,
+        onBack: function(){ setPage(detailFrom); }
+      }),
+      (page === "log" || page === "words") && React.createElement("div", { className:"footer" },
+        "EMBER \u00B7 Built with \u2661 by Iris & Lux")
+    ),
+    showCreature && React.createElement(PixelCreature, { hasUnread: unreadCount > 0 })
+  );
 }
-ReactDOM.render(/*#__PURE__*/React.createElement(App, null), document.getElementById("root"));
+
+ReactDOM.render(React.createElement(App, null), document.getElementById("root"));
 </script>
 </body>
 </html>
