@@ -246,9 +246,9 @@ function EntryView(props){
     React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"14px"}},
       React.createElement("div",{style:{display:"flex",alignItems:"center",gap:"10px"}},
         React.createElement("span",{style:{fontSize:"13px",color:"#8090b8"}},entry.entry_date||entry.date),
-        React.createElement(TimeFeelBadge,{timefeel:entry.time_of_day||entry.timefeel})),
+        React.createElement("span",{style:{fontSize:"13px",color:"#8090b8"}},entry.created_at?new Date(entry.created_at).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}):"")),
       React.createElement(LetterIcon,{size:24,unread:unread})),
-    React.createElement("div",{style:{borderLeft:"4px solid "+tf.color,background:"#0c1024",padding:"24px 24px 24px 20px",boxShadow:"0 4px 12px rgba(0,0,0,0.4)",marginBottom:"20px",border:"2px solid #141c38",borderLeftWidth:"4px",borderLeftColor:tf.color}},
+    React.createElement("div",{style:{borderLeft:"4px solid #1e2848",background:"#0c1024",padding:"24px 24px 24px 20px",boxShadow:"0 4px 12px rgba(0,0,0,0.4)",marginBottom:"20px",border:"2px solid #141c38",borderLeftWidth:"4px",borderLeftColor:"#1e2848"}},
       React.createElement(EntryBody,{body:entry.body,annotations:anns,onSelect:onSel})),
     anns.length>0&&React.createElement("div",null,
       React.createElement("div",{style:{borderTop:"2px dashed #1a2040",marginBottom:"14px"}}),
@@ -271,12 +271,12 @@ function LogPage(props){
         React.createElement("div",{onClick:function(){onSelect(e);},className:"log-card"+(unread?" unread":""),
           onMouseEnter:function(ev){ev.currentTarget.style.transform="translate(-1px,-1px)";},
           onMouseLeave:function(ev){ev.currentTarget.style.transform="translate(0,0)";}},
-          React.createElement("div",{style:{width:"5px",background:tf.color,flexShrink:0}}),
+          React.createElement("div",{style:{width:"5px",background:"#1e2848",flexShrink:0}}),
           React.createElement("div",{style:{padding:"12px 14px",flex:1,overflow:"hidden"}},
             React.createElement("div",{style:{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"4px"}},
               React.createElement("div",{style:{display:"flex",alignItems:"center",gap:"8px"}},
                 React.createElement("span",{style:{fontSize:"12px",color:"#8090b8"}},e.entry_date),
-                React.createElement(TimeFeelBadge,{timefeel:e.time_of_day,style:{fontSize:"8px",padding:"1px 6px"}})),
+                React.createElement("span",{style:{fontSize:"12px",color:"#8090b8"}},e.created_at?new Date(e.created_at).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false}):"")),
               React.createElement(LetterIcon,{size:20,unread:unread})),
             React.createElement("div",{style:{fontSize:"12px",color:"#505878",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}},preview),
             ac>0&&React.createElement("div",{className:"label",style:{fontSize:"8px",marginTop:"4px",color:"#607098"}},ac," ANNOTATION",ac>1?"S":""))));
@@ -303,14 +303,13 @@ function WordsPage(props){
     React.createElement("div",{className:"dow-header"},["SUN","MON","TUE","WED","THU","FRI","SAT"].map(function(x){return React.createElement("div",{key:x,style:{textAlign:"center",fontSize:"8px",letterSpacing:"2px",color:"#383c58"}},x);})),
     React.createElement("div",{className:"cal-grid"},cells.map(function(cell,i){
       if(!cell)return React.createElement("div",{key:"e"+i});
-      var e=cell.entry,tf=e?(TIME_FEELS[e.time_of_day]||TIME_FEELS.morning):null,ur=e&&!e.discovered_at;
+      var e=cell.entry,ur=e&&!e.discovered_at;
       return React.createElement("div",{key:i,onClick:function(){if(e)onSelect(e);},className:e?("cal-cell cal-filled"+(ur?" unread":"")):"cal-cell cal-empty",
         onMouseEnter:function(ev){if(e)ev.currentTarget.style.transform="translate(-1px,-1px)";},
         onMouseLeave:function(ev){ev.currentTarget.style.transform="translate(0,0)";}},
         React.createElement("div",{style:{fontSize:"8px",color:"#383c58"}},cell.day),
         e?React.createElement("div",{style:{textAlign:"center",flex:1,display:"flex",alignItems:"center",justifyContent:"center"}},React.createElement(LetterIcon,{size:14,unread:ur}))
         :React.createElement("div",{style:{flex:1,display:"flex",alignItems:"center",justifyContent:"center"}},React.createElement("div",{style:{width:"4px",height:"4px",background:"#101828"}})),
-        tf&&React.createElement("div",{style:{height:"3px",background:tf.color,margin:"0 -3px -3px"}}),
         ur&&React.createElement("div",{style:{position:"absolute",top:"2px",right:"2px",width:"4px",height:"4px",background:"#7088b8",borderRadius:"50%",boxShadow:"0 0 3px rgba(112,136,184,0.4)"}}));
     })));
 }
